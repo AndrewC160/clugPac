@@ -14,7 +14,7 @@ preview_text_file(file_name, lines_out = 12, suffix_line = "...")
 \item{suffix_line}{Line to append to the tail of the output. Defaults to "...".}
 }
 \description{
-Given a text file name (such as a script or README), print out 
-the top <lines_out> lines followed by a final <suffix_line> using cat(). 
+Given a text file name (such as a script or README), print out
+the top <lines_out> lines followed by a final <suffix_line> using cat().
 Useful for previewing text documents within markdowns.
 }

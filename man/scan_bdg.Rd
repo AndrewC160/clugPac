@@ -4,10 +4,12 @@
 \alias{scan_bdg}
 \title{Scan Tabix-indexed BedGraph file.}
 \usage{
-scan_bdg(bgz_files, gr_regions, col_names)
+scan_bdg(bgz_files, name_vec, gr_regions, col_names)
 }
 \arguments{
 \item{bgz_files}{List of filenames of tabix-indexed BDG files.}
+
+\item{name_vec}{Vector of names for 'name' column. If missing, names can be retrieved from bgz_files, otherwise will use file base name. Must be the same length as bgz_files.}
 
 \item{gr_regions}{GenomicRanges containing regions of interest.}
 
