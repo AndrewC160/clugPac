@@ -83,7 +83,10 @@ gtf_to_exons    <- function(granges_query,tabix_gtf,cache_tsv=NULL,overwrite_cac
       distinct %>%
       pivot_wider(id_cols = c(seqnames,start,end,strand,query_range),
                   names_from = name,values_from = val,
-                  values_fn = function(x) list(unique(x))) %>%
+                  values_fn = function(x) list(unique(x)))
+    #Some exons don't have gene names, so in the off chance this happens in ALL exons one needs to add the gene_name column manually.
+    if(!"gene_name" %in% tb_exons) tb_exons <- mutate(tb_exons,gene_name = list(""))
+    tb_exons <- tb_exons %>%
       unnest(exon_number) %>%
       unnest(exon_id) %>%
       unnest(gene_name) %>%

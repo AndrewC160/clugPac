@@ -19,5 +19,8 @@ scan_bdg(bgz_files, name_vec, gr_regions, col_names)
 Scan one or more BGzipped and Tabix-indexed files within regions specified
 in <gr_regions> GRange object. Function is run recursively if more than one
 bgzipped file is specified, and results are concatenated into a single
-table. Uses Rsamtools::TabixFile for scanning and returns a tibble
+table. Uses Rsamtools::TabixFile for scanning and returns a tibble. Note
+that if the input gr_regions have names assigned, these will be substituted
+into the region field. Otherwise this field will contain the as.character()
+coercions of the gr_regions themselves.
 }

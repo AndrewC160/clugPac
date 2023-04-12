@@ -5,7 +5,10 @@
 #' Scan one or more BGzipped and Tabix-indexed files within regions specified
 #' in <gr_regions> GRange object. Function is run recursively if more than one
 #' bgzipped file is specified, and results are concatenated into a single
-#' table. Uses Rsamtools::TabixFile for scanning and returns a tibble
+#' table. Uses Rsamtools::TabixFile for scanning and returns a tibble. Note
+#' that if the input gr_regions have names assigned, these will be substituted
+#' into the region field. Otherwise this field will contain the as.character()
+#' coercions of the gr_regions themselves.
 #'
 #' @param bgz_files List of filenames of tabix-indexed BDG files.
 #' @param name_vec Vector of names for 'name' column. If missing, names can be retrieved from bgz_files, otherwise will use file base name. Must be the same length as bgz_files.
@@ -20,7 +23,7 @@
 #'
 #' @export
 
-scan_bdg        <- function(bgz_files,name_vec,gr_regions,col_names){
+scan_bdg  <- function(bgz_files,name_vec,gr_regions,col_names){
   if(missing(col_names)){
     col_names   <- c("seqnames","start","end","score","region")
   }
@@ -60,6 +63,16 @@ scan_bdg        <- function(bgz_files,name_vec,gr_regions,col_names){
     tb_out  <- fread(text=tb_out,sep="\t",col.names = col_names) %>%
       as_tibble %>%
       mutate(name = name_value)
+
+    #See if names are present in gr_regions.
+    if(!is.null(names(gr_regions))){
+      reg_nms<- gr_regions
+      strand(reg_nms) <- "*"
+      reg_nms<- as.character(reg_nms)
+
+      gr_nms <- setNames(names(gr_regions),reg_nms)
+      tb_out <- mutate(tb_out,region = gr_nms[region])
+    }
   }
   return(tb_out)
 }
