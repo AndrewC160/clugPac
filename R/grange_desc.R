@@ -4,7 +4,7 @@
 #' @description
 #' Given a GRanges object, returns a simple annotation in the format:
 #'
-#' "Chr1: 1,000,000 - 1,100,000 (1MB)"
+#' "Chr1: 1,000,000 - 2,000,000 (1MB)"
 #'
 #' @param grange_in GRange to describe, should be of length one (if not, only the first will be described.)
 #' @param force_unit Enforce a desired unit (bp, kb, MB) for width readout.

@@ -26,5 +26,5 @@ grange_desc(
 \description{
 Given a GRanges object, returns a simple annotation in the format:
 
-"Chr1: 1,000,000 - 1,100,000 (1MB)"
+"Chr1: 1,000,000 - 2,000,000 (1MB)"
 }
