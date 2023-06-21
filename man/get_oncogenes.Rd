@@ -4,11 +4,14 @@
 \alias{get_oncogenes}
 \title{Get oncogenes}
 \usage{
-get_oncogenes()
+get_oncogenes(gene_source = "asclab")
 }
 \description{
-Retrieve the Bushman Lab group's compilation of cancer genes, downloaded
-from http://www.bushmanlab.org/assets/doc/allOnco_June2021.tsv.
-
-Website: http://www.bushmanlab.org/links/genelists
+Retrieve table of oncogenes and their IDs. If "source" is set to "bushman",
+this table is retrieved from the Bushman Lab group's compilation of cancer
+genes, downloaded from
+http://www.bushmanlab.org/assets/doc/allOnco_June2021.tsv (Website:
+http://www.bushmanlab.org/links/genelists). If set to
+"asclab" (default), this table is from the file
+"CancerGeneListSPCG_2023_formatted.tab" provided by Henry Martell.
 }

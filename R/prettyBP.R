@@ -24,8 +24,8 @@ prettyBP        <- function(bp_val,force_unit=NULL,digits=1,sep=""){
         unit_out<- force_unit
       }
     }else{
-      unit_out<- case_when(bp_val < 1e3~"bp",
-                           bp_val < 1e6~"kb",
+      unit_out<- case_when(abs(bp_val) < 1e3~"bp",
+                           abs(bp_val) < 1e6~"kb",
                            TRUE ~ "MB")
     }
     bp_val <- as.double(bp_val)
