@@ -9,6 +9,10 @@
 #' all ('No data' entries are omitted, so missing samples implicitly had no
 #' data).
 #'
+#' Note that  some FastQC versions appear to insert additional lines before a
+#' given table's header row; these are ignored (for instance, the sequence
+#' duplication levels table may have a "#Total deduplication percentage" tag).
+#'
 #' @param zip_fastq FastQC Zip file(s) (with .zip ending) to be parsed.
 #' @param stay_silent Should scan() report how many lines were read? Defaults to FALSE.
 #'
@@ -54,7 +58,11 @@ read_fastqc <- function(zip_fastqc,stay_silent=TRUE){
       if(st_row >= en_row){
         tb_out<- "No data"
       }else{
-        tb_out  <- fread(text=txt_dat[st_row:en_row],sep = "\t") %>%
+        txt <- txt_dat[st_row:en_row]
+        #Some FastQC versions appear to arbitrarily stuff things before the table prefixed with a #; throw that out.
+        header_row <- max(grep("^#",txt))
+        txt <- txt[header_row:length(txt)]
+        tb_out  <- fread(text=txt,sep = "\t") %>%
           mutate(name = gsub("_fastqc$","",base_nm)) %>%
           rename_all(function(x) gsub("#","",gsub(" ","_",gsub("'","",tolower(x)))))
       }

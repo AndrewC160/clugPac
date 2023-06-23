@@ -20,4 +20,8 @@ tables with missing data are returned with the line "No data," and if run
 recursively this may mean that some samples are not included in tables at
 all ('No data' entries are omitted, so missing samples implicitly had no
 data).
+
+Note that  some FastQC versions appear to insert additional lines before a
+given table's header row; these are ignored (for instance, the sequence
+duplication levels table may have a "#Total deduplication percentage" tag).
 }
