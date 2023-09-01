@@ -27,6 +27,8 @@ get_oncogenes   <- function(gene_source="asclab"){
   }else{
     tb_out  <- system.file("extdata","CancerGeneListSPCG_2023_formatted.tab",package="clugPac") %>%
       fread(header=TRUE) %>%
+      rename(ensembl_id = ens,
+             gene_name = gene) %>%
       as_tibble
   }
   return(tb_out)

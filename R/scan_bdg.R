@@ -28,17 +28,20 @@ scan_bdg  <- function(bgz_files,name_vec,gr_regions,col_names){
     col_names   <- c("seqnames","start","end","score","region")
   }
   if(length(bgz_files) > 1){
-    if(is.null(names(bgz_files)) & missing(name_vec)){
-      names(bgz_files)  <- paste0("bdg_",c(1:length(bgz_files)))
-    }else{
-      if(length(name_vec) != length(bgz_files)) stop("Differing number of files/names provided.")
-      names(bgz_files)  <- name_vec
+    if(!missing(name_vec)){
+      if(length(name_vec) != length(bgz_files)){
+        stop("Differing number of files/names provided.")
+      }
+      names(bgz_files) <- name_vec
+    }
+    if(is.null(names(bgz_files))){
+      names(bgz_files) <- paste0("bdg_",c(1:length(bgz_files)))
     }
     tb_out  <- lapply(names(bgz_files),function(nm) {
       scan_bdg(bgz_files = bgz_files[[nm]],gr_region = gr_regions,col_names=col_names) %>%
         as_tibble %>%
         mutate(name = nm)
-      }) %>%
+    }) %>%
       do.call(rbind,.)
   }else{
     tb_file <- Rsamtools::TabixFile(file = bgz_files)
@@ -74,5 +77,52 @@ scan_bdg  <- function(bgz_files,name_vec,gr_regions,col_names){
       tb_out <- mutate(tb_out,region = gr_nms[region])
     }
   }
+  # if(length(bgz_files) > 1){
+  #   if(is.null(names(bgz_files)) & missing(name_vec)){
+  #     names(bgz_files)  <- paste0("bdg_",c(1:length(bgz_files)))
+  #   }else{
+  #     if(length(name_vec) != length(bgz_files)) stop("Differing number of files/names provided.")
+  #     names(bgz_files)  <- name_vec
+  #   }
+  #   tb_out  <- lapply(names(bgz_files),function(nm) {
+  #     scan_bdg(bgz_files = bgz_files[[nm]],gr_region = gr_regions,col_names=col_names) %>%
+  #       as_tibble %>%
+  #       mutate(name = nm)
+  #     }) %>%
+  #     do.call(rbind,.)
+  # }else{
+  #   tb_file <- Rsamtools::TabixFile(file = bgz_files)
+  #   txt_lst <- Rsamtools::scanTabix(tb_file,param=gr_regions)
+  #   if(length(txt_lst) == 0){
+  #     return(NULL)
+  #   }
+  #   if(missing(name_vec)){
+  #     name_value  <- gsub(".bdg.gz","",basename(tb_file$path))
+  #   }else{
+  #     name_value  <- name_vec
+  #   }
+  #   tb_out  <- lapply(names(txt_lst), function(nm) {
+  #     txt   <- txt_lst[[nm]]
+  #     paste0(txt,"\t",nm)
+  #   }) %>%
+  #     do.call(c,.)
+  #   if(length(tb_out) == 1){
+  #     #Add newline in cases where only one value returned.
+  #     tb_out <- paste0(tb_out,"\n")
+  #   }
+  #   tb_out  <- fread(text=tb_out,sep="\t",col.names = col_names) %>%
+  #     as_tibble %>%
+  #     mutate(name = name_value)
+  #
+  #   #See if names are present in gr_regions.
+  #   if(!is.null(names(gr_regions))){
+  #     reg_nms<- gr_regions
+  #     strand(reg_nms) <- "*"
+  #     reg_nms<- as.character(reg_nms)
+  #
+  #     gr_nms <- setNames(names(gr_regions),reg_nms)
+  #     tb_out <- mutate(tb_out,region = gr_nms[region])
+  #   }
+  # }
   return(tb_out)
 }
