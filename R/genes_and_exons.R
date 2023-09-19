@@ -35,11 +35,15 @@ genes_and_exons <- function(grange_win,return_exons=TRUE,clip_features = TRUE,ca
     if(return_exons){
       #Get exons, and get as GRanges if needed.
       tb_exons<- gtf_to_exons(granges_query = grange_win,cache_tsv = cache_exon_tsv,overwrite_cache = overwrite_cache,as_grange = as_grange)
-      if(clip_features){
-        tb_exons  <- clip_granges(tb_exons,grange_window = grange_win,replace_cols = TRUE,include_clipped_col = TRUE)
+      if(!is.null(tb_exons)){
+        if(clip_features){
+          tb_exons  <- clip_granges(tb_exons,grange_window = grange_win,replace_cols = TRUE,include_clipped_col = TRUE)
+        }
+        #Label oncogene exons.
+        tb_exons$bushman_onco <- tb_exons$gene_id %in% onco_ens_ids
+      }else{
+        tb_exons <- NA
       }
-      #Label oncogene exons.
-      tb_exons$bushman_onco <- tb_exons$gene_id %in% onco_ens_ids
     }
   }else if(return_exons){
     warning("genes_and_exons() does not return exons for whole genome, use gtf_to_exons() for large queries.")
