@@ -47,7 +47,7 @@ get_bed_saturation  <- function(bed_files,name_out="Saturation",cache_rds,iters 
   rename <- dplyr::rename
 
   if(missing(cache_rds)) cache_rds <- ""
-  read_bed <- function(bed_file_in,){
+  read_bed <- function(bed_file_in){
     fread(bed_file_in) %>%
       select(1:3) %>%
       rename(seqnames=1,start=2,end=3) %>%

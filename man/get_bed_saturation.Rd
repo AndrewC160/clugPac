@@ -28,10 +28,10 @@ get_bed_saturation(
 }
 \description{
 Given a set of BED files, anticipate the saturation of annotated features by
-unifying files step-wise in a random order, counting the number of unique 
-features each time. Repeat the process for <iters> iterations, and use a 
+unifying files step-wise in a random order, counting the number of unique
+features each time. Repeat the process for <iters> iterations, and use a
 saturation curve model (drc::drm(fct=22.5L())) to extrapolate peaks step-wise
-up to <extrap_points> samples. Produce a plot summarizing this data, and 
+up to <extrap_points> samples. Produce a plot summarizing this data, and
 store it as well as all tables and the saturation model to an RDS object, if
 <cache_rds> is provided. If <cache_rds> is provided and that file exists,
 read it directly (if <over_write> is FALSE).
