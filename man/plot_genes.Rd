@@ -8,8 +8,12 @@ plot_genes(
   genomic_region,
   gr_genes = NULL,
   label_genes = NULL,
+  label_size = 3,
+  label_seed = NULL,
   text_genes = NULL,
-  text_biotypes = c("protein_coding", "lncRNA")
+  text_size = 2,
+  text_biotypes = c("protein_coding", "lncRNA"),
+  text_seed = NULL
 )
 }
 \arguments{
@@ -19,9 +23,17 @@ plot_genes(
 
 \item{label_genes}{Gene names to be labeled. Defaults to NULL, in which case no genes are labeled. Supersedes text_genes.}
 
+\item{label_size}{Size of text in labels' font.}
+
+\item{label_seed}{Seed number to use for ggrepel labels (used to maintain consistent label / text positions). Defaults to NULL.}
+
 \item{text_genes}{Gene names to be labeled with text. Defaults to NULL, in which case no genes are labeled.}
 
+\item{text_size}{Size of text font.}
+
 \item{text_biotypes}{Vector of gene biotypes to be labeled with text. Defaults to "protein_coding" and "lncRNA." If "all" is listed, all biotypes will be labeled.}
+
+\item{text_seed}{Seed number to use for ggrepel text (used to maintain consistent label / text positions). Defaults to NULL.}
 }
 \description{
 Given a genomic range, plots a simple gene track using gene annotations from

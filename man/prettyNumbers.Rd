@@ -4,10 +4,12 @@
 \alias{prettyNumbers}
 \title{Pretty numbers}
 \usage{
-prettyNumbers(num_in, force_unit = NULL, digs = 2)
+prettyNumbers(num_in, drop_zero = FALSE, force_unit = NULL, digs = 2)
 }
 \arguments{
 \item{num_in}{Number to convert to a human-readable string.}
+
+\item{drop_zero}{Should zero values be returned as ""? Defaults to FALSE, in which case "0" is returned.}
 
 \item{force_unit}{Unit to convert numbers to, can be "T", "B", "M", "k" or "" for no units. Defaults to NULL, in which case output is decided automatically.}
 
@@ -18,7 +20,8 @@ Given a number value, determine if it should be reported in thousands
 (k, 1e3), millions (M, 1e6), billions (B, 1e9), or trillions (T, 1e12). Round
 off digits to the <digs> place. Force a unit with <force unit>, which can be
 any of "T","B","M","k", or "" (for no units). Values can be in string format,
-provided that they are coercible to double (an error will be thrown
-otherwise), and commas will be ignored such that "-223,442.05" can be read as
-"-223k" by default.
+provided that they are coercible to double (values which do not convert will
+be returned as empty strings), and commas will be ignored such that
+"-223,442.05" can be read as "-223k" by default. NA values will be treated as
+zero values.
 }

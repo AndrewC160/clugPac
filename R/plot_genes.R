@@ -8,8 +8,12 @@
 #' @param genomic_region GRange denoting the region to be illustrated.
 #' @param gr_genes GRanges object containing gene annotations. If not provided, gtf_to_genes() is used, but this can be time consuming: better to use gtf_to_genes() earlier and provide the output GR to this function directly.
 #' @param label_genes Gene names to be labeled. Defaults to NULL, in which case no genes are labeled. Supersedes text_genes.
+#' @param label_size Size of text in labels' font.
+#' @param label_seed Seed number to use for ggrepel labels (used to maintain consistent label / text positions). Defaults to NULL.
 #' @param text_genes Gene names to be labeled with text. Defaults to NULL, in which case no genes are labeled.
+#' @param text_size Size of text font.
 #' @param text_biotypes Vector of gene biotypes to be labeled with text. Defaults to "protein_coding" and "lncRNA." If "all" is listed, all biotypes will be labeled.
+#' @param text_seed Seed number to use for ggrepel text (used to maintain consistent label / text positions). Defaults to NULL.
 #'
 #' @import ggplot2
 #' @import magrittr
@@ -19,7 +23,7 @@
 #'
 #' @export
 
-plot_genes<- function(genomic_region,gr_genes=NULL,label_genes=NULL,text_genes=NULL,text_biotypes=c("protein_coding","lncRNA")){
+plot_genes<- function(genomic_region,gr_genes=NULL,label_genes=NULL,label_size=3,label_seed=NULL,text_genes=NULL,text_size=2,text_biotypes=c("protein_coding","lncRNA"),text_seed=NULL){
   rename  <- dplyr::rename
   mutate  <- dplyr::mutate
   filter  <- dplyr::filter
@@ -84,11 +88,13 @@ plot_genes<- function(genomic_region,gr_genes=NULL,label_genes=NULL,text_genes=N
     if(nrow(tb_labs) > 0){
       base_plot <- base_plot +
         geom_text_repel(data=tb_labs,
+                  seed = text_seed,
+                  size=text_size,
                   mapping=aes(x=(start + end) / 2,
                               y=(ymin + ymax) / 2,
                               label = gene_name),
                   min.segment.length = 0.01,
-                  nudge_y = sample(c(1,-1),replace=TRUE,size = nrow(tb_labs)))
+                  nudge_y = sample(c(1,-1),replace=TRUE))#,size = nrow(tb_labs)))
     }
     #Gene labels.
     tb_labs <- filter(tb_p,lab_type == "label")
@@ -96,10 +102,12 @@ plot_genes<- function(genomic_region,gr_genes=NULL,label_genes=NULL,text_genes=N
       base_plot <- base_plot +
         geom_label_repel(
           data=tb_labs,
+          seed = label_seed,
           mapping=aes(x=(start + end) / 2,
                       y=(ymin + ymax) / 2,
                       label = gene_name),
           min.segment.length = 0.01,
+          size=label_size,
           nudge_y = 2)
     }
   }
