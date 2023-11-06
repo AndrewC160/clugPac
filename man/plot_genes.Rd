@@ -10,10 +10,15 @@ plot_genes(
   label_genes = NULL,
   label_size = 3,
   label_seed = NULL,
+  focus_genes = NULL,
+  background_alpha = 0.25,
   text_genes = NULL,
-  text_size = 2,
   text_biotypes = c("protein_coding", "lncRNA"),
-  text_seed = NULL
+  text_size = 2,
+  text_bins = 10,
+  text_nudge_y = 0.25,
+  text_line_height = 0.2,
+  text_nudge_x = 0.005
 )
 }
 \arguments{
@@ -23,17 +28,27 @@ plot_genes(
 
 \item{label_genes}{Gene names to be labeled. Defaults to NULL, in which case no genes are labeled. Supersedes text_genes.}
 
-\item{label_size}{Size of text in labels' font.}
+\item{label_size}{Size of text in labels' font. Defaults to 3.}
 
-\item{label_seed}{Seed number to use for ggrepel labels (used to maintain consistent label / text positions). Defaults to NULL.}
+\item{label_seed}{Seed number to use for ggrepel labels (used to maintain consistent label positions). Defaults to NULL.}
 
-\item{text_genes}{Gene names to be labeled with text. Defaults to NULL, in which case no genes are labeled.}
+\item{focus_genes}{Gene names to highlight (i.e. give an alpha of 1). If given, genes not in this list have their alpha reduced to <background_alpha>. Defaults to NULL, in which case all genes are alpha 1.}
 
-\item{text_size}{Size of text font.}
+\item{background_alpha}{Alpha value to use for background (non-<focus-genes>). Defaults to 0.25.}
+
+\item{text_genes}{Gene names to be labeled with text. Defaults to NULL, in which case no genes are labeled. Genes must have non-empty gene name columns.}
 
 \item{text_biotypes}{Vector of gene biotypes to be labeled with text. Defaults to "protein_coding" and "lncRNA." If "all" is listed, all biotypes will be labeled.}
 
-\item{text_seed}{Seed number to use for ggrepel text (used to maintain consistent label / text positions). Defaults to NULL.}
+\item{text_size}{Size of text font. Defaults to 2.}
+
+\item{text_bins}{X-axis is split into <text_bins> "bins" and labels are stacked within each. Fewer bins result in higher stacks of labels, while lower bin numbers may result in more overlaps with labels/geometry. Defaults to 10.}
+
+\item{text_nudge_y}{Distance above each text bin's highest gene annotation above which to start adding text labels in units of gene layers (one layer = one gene annotation). Defaults to 0.25.}
+
+\item{text_line_height}{Height of text labels, useful to adjust in cases where larger text sizes are used causing them to overlap. Units of layers, defaults to 0.2.}
+
+\item{text_nudge_x}{Distance to nudge labels in the negative x-direction when staggering stacked labels. Units of fractions of the X-axis, defaults to 0.005 (text is nudged 0.5% of the x-axis per stacked label).}
 }
 \description{
 Given a genomic range, plots a simple gene track using gene annotations from
