@@ -43,23 +43,24 @@ plot_genes_pileup <- function(genomic_region,gr_genes_in=NULL,bin_num=300,label_
   y_max <- max(tb_p$count)
   y_rng <- NULL
   geom_labs <- NULL
+  lab_frac  <- 0.2 + kary_frac
   if(!is.null(label_genes)){
     tb_labs <- gr_gns[gr_gns$gene_name %in% label_genes] %>% as_tibble
     if(nrow(tb_labs) > 0){
-      y_rng <- c(-y_max*0.3,y_max*1.1)
-      geom_labs <- geom_label_repel(data=tb_labs,mapping=aes(y=0,x=(start+end)/2,label=gene_name),
-                                    size=label_size,nudge_y = -0.1 * y_max,inherit.aes=FALSE,
+      y_rng <- c(-y_max*lab_frac,y_max*1.1)
+      geom_labs <- geom_label_repel(data=tb_labs,mapping=aes(y=-kary_frac * y_max,x=(start+end)/2,label=gene_name),
+                                    size=label_size,nudge_y = -kary_frac * y_max,inherit.aes=FALSE,
                                     min.segment.length = 0)
     }
   }
   if(is.null(y_rng)){
-    y_rng <- c(-y_max * 0.1,y_max*1.1)
+    y_rng <- c(-y_max * kary_frac,y_max*1.1)
   }
 
   tb_kary <- get_karyotypes() %>%
     subsetByOverlaps(genomic_region) %>%
     as_tibble %>%
-    mutate(ymax=0,ymin=y_max*kary_frac)
+    mutate(ymax=0,ymin=-y_max*kary_frac)
 
   ggplot(tb_p,aes(xmin=start,xmax=end,ymin=0,ymax=count)) +
     scale_x_continuous(name=grange_desc(genomic_region,append_ending = paste0("; ",bin_size," bin size")),
@@ -68,7 +69,7 @@ plot_genes_pileup <- function(genomic_region,gr_genes_in=NULL,bin_num=300,label_
     geom_rect(fill="gray40",color="gray20") +
     geom_rect(data=tb_kary,mapping=aes(xmin=start,xmax=end,ymin=ymin,ymax=ymax,fill=fill),
               inherit.aes=FALSE) +
-    annotate(geom="rect",xmin=x_rng[1],xmax=x_rng[2],ymax=0,ymin=kary_frac*y_max,fill=NA,color="black",linewidth=0.5) +
+    annotate(geom="rect",xmin=x_rng[1],xmax=x_rng[2],ymax=0,ymin=-kary_frac*y_max,fill=NA,color="black",linewidth=0.5) +
     scale_fill_identity() +
     geom_labs +
     theme(plot.background = element_rect(fill="white",color=NA),
