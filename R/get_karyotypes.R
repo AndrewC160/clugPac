@@ -7,6 +7,7 @@
 #' colors in the "fill" column.
 #'
 #' @param grange_in GRanges object denoting area to retrieve. Assumes a contiguous region; for non-contiguous regions use multiple calls.
+#' @param standard_chroms Should only standard chromosomes be included? Defaults to TRUE.
 #'
 #' @import GenomicRanges
 #' @import dplyr
@@ -17,7 +18,7 @@
 #' @export
 
 get_karyotypes  <- function(grange_win=NULL,standard_chroms=TRUE){
-  color_table <- c(gneg="white",
+  fill_table <- c(gneg="white",
                    gpos25="gray75",
                    gpos50="gray50",
                    gpos75="gray25",
@@ -25,6 +26,14 @@ get_karyotypes  <- function(grange_win=NULL,standard_chroms=TRUE){
                    acen = "red",
                    stalk = "lightblue",
                    gvar = "pink")
+  color_table<- c(gneg="black",
+                  gpos25="black",
+                  gpos50="black",
+                  gpos75="white",
+                  gpos100="white",
+                  acen = "black",
+                  stalk = "black",
+                  gvar = "black")
   sq_adj  <- get_seqsizes_adj()
   gr <- fread(system.file("extdata","cytobands.txt",package = "clugPac"),sep="\t") %>%
     dplyr::rename(
@@ -33,14 +42,16 @@ get_karyotypes  <- function(grange_win=NULL,standard_chroms=TRUE){
       end = chromEnd) %>%
     as_tibble %>%
     dplyr::mutate(start = ifelse(start ==0,1,start),
-                  fill = color_table[gieStain],
+                  fill = fill_table[gieStain],
+                  color= color_table[gieStain],
                   start_adj = start + sq_adj[as.character(seqnames)],
-                  end_adj = end + sq_adj[as.character(seqnames)]) %>%
-    makeGRangesFromDataFrame(keep.extra.columns = TRUE)
-
+                  end_adj = end + sq_adj[as.character(seqnames)])
   if(standard_chroms){
-    gr <- keepStandardChromosomes(gr,pruning.mode="coarse")
+    gr <- gr %>%
+      mutate(seqnames=factor(seqnames,levels=paste0("chr",c(1:22,"X","Y")))) %>%
+      dplyr::filter(!is.na(seqnames))
   }
+  gr <- makeGRangesFromDataFrame(gr,seqnames.field = "seqnames",start.field = "start",end.field = "end",keep.extra.columns = TRUE)
 
   if(!is.null(grange_win)){
     g_min   <- min(start(grange_win) + sq_adj[as.character(seqnames(grange_win))])

@@ -10,7 +10,8 @@ plot_genes_pileup(
   bin_num = 300,
   label_genes = NULL,
   label_size = 3,
-  label_seed = NULL
+  label_seed = NULL,
+  kary_frac = 0.1
 )
 }
 \arguments{

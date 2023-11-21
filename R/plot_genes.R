@@ -92,17 +92,21 @@ plot_genes<- function(genomic_region,gr_genes=NULL,label_genes=NULL,label_size=3
                                   gene_biotype %in% text_biotypes ~ "text",
                                   TRUE ~ "none"))
 
-    tb_labs <- tb_p %>%
-      filter(lab_type != "none") %>%
-      arrange(desc(start),desc(end)) %>%
-      mutate(text_bin = cut(start,breaks=text_bins,dig.lab = 10)) %>%
-      mutate(text_bin_start = str_match(as.character(text_bin),"^[\\[\\(]([[:digit:]\\.]+)")[,2] %>% as.double %>% ceiling,
-             text_bin_end = str_match(as.character(text_bin),"([[:digit:]\\.]+)[\\]\\)]$")[,2] %>% as.double %>% ceiling) %>%
-      group_by(text_bin) %>%
-      mutate(text_y1 = max(ymax) + text_nudge_y,
-             text_y2 = text_y1 + text_line_height* row_number() * max(ymax),
-             text_bin_start = text_bin_start - (row_number() * text_nudge_x * diff(x_rng)),
-             text_bin_start = ifelse(text_bin_start < x_rng[1],x_rng[1],text_bin_start))
+    tb_labs <- filter(tb_p,lab_type != "none")
+    if(nrow(tb_labs) > 0){
+      tb_labs<- tb_labs %>%
+        arrange(desc(start),desc(end)) %>%
+        mutate(text_bin = cut(start,breaks=text_bins,dig.lab = 10)) %>%
+        mutate(text_bin_start = str_match(as.character(text_bin),"^[\\[\\(]([[:digit:]\\.]+)")[,2] %>% as.double %>% ceiling,
+               text_bin_end = str_match(as.character(text_bin),"([[:digit:]\\.]+)[\\]\\)]$")[,2] %>% as.double %>% ceiling) %>%
+        group_by(text_bin) %>%
+        mutate(text_y1 = max(ymax) + text_nudge_y,
+               text_y2 = text_y1 + text_line_height* row_number() * max(ymax),
+               text_bin_start = text_bin_start - (row_number() * text_nudge_x * diff(x_rng)),
+               text_bin_start = ifelse(text_bin_start < x_rng[1],x_rng[1],text_bin_start))
+    }else{
+      tb_labs <- mutate(tb_labs,text_y1 = 0,text_y2 = 0)
+    }
 
     # Scale y up for very large windows to represent "zoomed out" scale.
     min_y_scale <- 6 + ceiling(width(genomic_region)/1E6)/2

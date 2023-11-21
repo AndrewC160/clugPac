@@ -7,6 +7,8 @@
 get_karyotypes(grange_win = NULL, standard_chroms = TRUE)
 }
 \arguments{
+\item{standard_chroms}{Should only standard chromosomes be included? Defaults to TRUE.}
+
 \item{grange_in}{GRanges object denoting area to retrieve. Assumes a contiguous region; for non-contiguous regions use multiple calls.}
 }
 \description{
