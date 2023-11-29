@@ -18,7 +18,9 @@ plot_genes(
   text_bins = 10,
   text_nudge_y = 0.25,
   text_line_height = 0.2,
-  text_nudge_x = 0.005
+  text_nudge_x = 0.005,
+  x_trace_genes = "label",
+  x_trace_alpha = 0.3
 )
 }
 \arguments{
@@ -48,7 +50,11 @@ plot_genes(
 
 \item{text_line_height}{Height of text labels, useful to adjust in cases where larger text sizes are used causing them to overlap. Units of layers, defaults to 0.2.}
 
-\item{text_nudge_x}{Distance to nudge labels in the negative x-direction when staggering stacked labels. Units of fractions of the X-axis, defaults to 0.005 (text is nudged 0.5% of the x-axis per stacked label).}
+\item{text_nudge_x}{Distance to nudge labels in the negative x-direction when staggering stacked labels. Units of fractions of the X-axis, defaults to 0.005 (text is nudged 0.05 of the x-axis per stacked label).}
+
+\item{x_trace_genes}{Gene names/IDs which should have traces drawn to the x-axis. Can be individual names/IDs, as well as "all", "focus" (foreground-only), and "label" (labeled genes only).}
+
+\item{x_trace_alpha}{Opacity of x-axis traces. Defaults to 0.3, can be between zero and 1.}
 }
 \description{
 Given a genomic range, plots a simple gene track using gene annotations from

@@ -12,7 +12,8 @@ genome_add_bedgraph(
   bdg_alphas = 1,
   bdg_multiplier = 1,
   facet_scales = "free_y",
-  downsample_bins = 2000
+  downsample_bins = 2000,
+  coarse_downsample_lines = 1e+05
 )
 }
 \arguments{

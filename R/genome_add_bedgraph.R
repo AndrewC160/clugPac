@@ -27,7 +27,7 @@
 #'
 #' @export
 
-genome_add_bedgraph <- function(plot_base_in,bdg_files,y_name=NULL,bdg_fills="black",bdg_alphas=1,bdg_multiplier=1,facet_scales="free_y",downsample_bins=2000){
+genome_add_bedgraph <- function(plot_base_in,bdg_files,y_name=NULL,bdg_fills="black",bdg_alphas=1,bdg_multiplier=1,facet_scales="free_y",downsample_bins=2000,coarse_downsample_lines=1E5){
   if(is.null(names(bdg_files))) names(bdg_files)  <- gsub(".bdg.gz|.bdg|.bedGraph","",basename(bdg_files))
   if(is.null(y_name)){
     y_name  <- plot_base_in$y_name
@@ -42,14 +42,16 @@ genome_add_bedgraph <- function(plot_base_in,bdg_files,y_name=NULL,bdg_fills="bl
            bdg=bdg_files,
            weight=bdg_multiplier)
 
+  nm_vec  <- vectify(tb_fls,name,bdg)
   tb_bdg  <- vectify(tb_fls,bdg,name) %>%
-    scan_bdg(gr_regions=plot_base_in$gr_win) %>%
+    scan_bdg(gr_regions=plot_base_in$gr_win,
+             name_vec = nm_vec,
+             coarse_downsample_lines = coarse_downsample_lines) %>%
     group_by(name) %>%
     downsample_bdg_table(bin_num  = downsample_bins) %>%
     ungroup %>%
     left_join(tb_fls,by="name") %>%
     mutate(score = score * weight)
-
 
   tb_scales <- tb_bdg %>%
     group_by(name) %>%
@@ -73,3 +75,4 @@ genome_add_bedgraph <- function(plot_base_in,bdg_files,y_name=NULL,bdg_fills="bl
   plot_base_out$scale_y_limits <- tb_scales
   return(plot_base_out)
 }
+

@@ -18,7 +18,9 @@
 #' @param text_bins X-axis is split into <text_bins> "bins" and labels are stacked within each. Fewer bins result in higher stacks of labels, while lower bin numbers may result in more overlaps with labels/geometry. Defaults to 10.
 #' @param text_nudge_y Distance above each text bin's highest gene annotation above which to start adding text labels in units of gene layers (one layer = one gene annotation). Defaults to 0.25.
 #' @param text_line_height Height of text labels, useful to adjust in cases where larger text sizes are used causing them to overlap. Units of layers, defaults to 0.2.
-#' @param text_nudge_x Distance to nudge labels in the negative x-direction when staggering stacked labels. Units of fractions of the X-axis, defaults to 0.005 (text is nudged 0.5% of the x-axis per stacked label).
+#' @param text_nudge_x Distance to nudge labels in the negative x-direction when staggering stacked labels. Units of fractions of the X-axis, defaults to 0.005 (text is nudged 0.05 of the x-axis per stacked label).
+#' @param x_trace_genes Gene names/IDs which should have traces drawn to the x-axis. Can be individual names/IDs, as well as "all", "focus" (foreground-only), and "label" (labeled genes only).
+#' @param x_trace_alpha Opacity of x-axis traces. Defaults to 0.3, can be between zero and 1.
 #'
 #' @import ggplot2
 #' @import magrittr
@@ -38,7 +40,8 @@
 plot_genes<- function(genomic_region,gr_genes=NULL,label_genes=NULL,label_size=3,label_seed=NULL,
                       focus_genes=NULL,background_alpha=0.25,
                       text_genes=NULL,text_biotypes=c("protein_coding","lncRNA"),
-                      text_size=2,text_bins=10,text_nudge_y=0.25,text_line_height=0.2,text_nudge_x = 0.005){
+                      text_size=2,text_bins=10,text_nudge_y=0.25,text_line_height=0.2,text_nudge_x = 0.005,
+                      x_trace_genes = "label",x_trace_alpha=0.3){
   rename  <- dplyr::rename
   mutate  <- dplyr::mutate
   filter  <- dplyr::filter
@@ -144,10 +147,55 @@ plot_genes<- function(genomic_region,gr_genes=NULL,label_genes=NULL,label_size=3
                   size=text_size)
     }
 
+    #X-axis traces.
+    poly_gns <- x_trace_genes
+    if("all" %in% tolower(x_trace_genes)){
+      poly_gns<- c(poly_gns,unique(tb_p$gene_id))
+    }
+    if("label" %in% tolower(x_trace_genes)){
+      poly_gns<- c(poly_gns,filter(tb_p,lab_type != "none")$gene_id)
+    }
+    if("focus" %in% tolower(x_trace_genes)){
+      poly_gns<- c(poly_gns,filter(tb_p,focus_type == "foreground")$gene_id)
+    }
+    geom_segs <- NULL
+    geom_polys<- NULL
+    tb_poly <- tb_p %>%
+      filter(gene_name %in% unique(poly_gns) | gene_id %in% unique(poly_gns)) %>%
+      mutate(gene_biotype = factor(as.character(gene_biotype),levels=levels(tb_p$gene_biotype)))
+
+    if(nrow(tb_poly) > 0){
+      tb_poly <- tb_poly %>%
+        mutate(x_frac = width/width(genomic_region),
+               x_polygon = x_frac > 0.01,
+               idx = row_number()) %>%
+        select(gene_name,gene_id,gene_biotype,start,end,mid,x_polygon,ymin,focus_type,lab_type,idx)
+
+      tb_segs <- filter(tb_poly,!x_polygon)
+      if(nrow(tb_segs) > 0){
+        geom_segs <- geom_segment(
+          data=tb_segs,
+          mapping=aes(x=mid,xend=mid,y=ymin+0.1,yend=-1),
+          color = "gray75",alpha=x_trace_alpha)
+      }
+      tb_poly <- filter(tb_poly,x_polygon)
+      if(nrow(tb_poly) > 0){
+        tb_poly <- tb_poly %>%
+          rowwise %>%
+          mutate(x_pos = list(c(start,end,mid)),
+                 y_pos = list(c(ymin+0.1,ymin+0.1,-1))) %>%
+          ungroup %>%
+          unnest(c(x_pos,y_pos))
+        geom_polys <- geom_polygon(data=tb_poly,mapping=aes(x=x_pos,y=y_pos,fill=gene_biotype,group=idx),alpha=x_trace_alpha)
+      }
+    }
+
     base_plot  <- base_plot +
       scale_alpha_manual(values=c(foreground=1,background=background_alpha)) +
       scale_color_manual(values=c(foreground="black",background=NA)) +
       scale_y +
+      geom_polys +
+      geom_segs +
       geom_rect(data=tb_p,
                 mapping=aes(xmin = start,xmax=end,
                             ymin = ymin+0.1, ymax=ymax-0.1,

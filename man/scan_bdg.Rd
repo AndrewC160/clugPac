@@ -4,7 +4,13 @@
 \alias{scan_bdg}
 \title{Scan Tabix-indexed BedGraph file.}
 \usage{
-scan_bdg(bgz_files, name_vec, gr_regions, col_names)
+scan_bdg(
+  bgz_files,
+  name_vec,
+  gr_regions,
+  col_names,
+  coarse_downsample_lines = Inf
+)
 }
 \arguments{
 \item{bgz_files}{List of filenames of tabix-indexed BDG files.}
@@ -14,6 +20,8 @@ scan_bdg(bgz_files, name_vec, gr_regions, col_names)
 \item{gr_regions}{GenomicRanges containing regions of interest.}
 
 \item{col_names}{Column names of BedGraph file. Defaults to standard 5 columns (seq,start,end,score,name), but can be changed to include additional columns if necessary.}
+
+\item{coarse_downsample_lines}{Threshold for corase downsampling. Defaults to Inf, in which case no coarse downsampling is done.}
 }
 \description{
 Scan one or more BGzipped and Tabix-indexed files within regions specified
@@ -23,4 +31,11 @@ table. Uses Rsamtools::TabixFile for scanning and returns a tibble. Note
 that if the input gr_regions have names assigned, these will be substituted
 into the region field. Otherwise this field will contain the as.character()
 coercions of the gr_regions themselves.
+
+Function allows for "coarse downsampling" via the <coarse_downsampling_lines>
+argument, as well. If the number of lines retrieved from a Tabix file is
+greater than this threshold, the retrieved lines are randomly sampled to keep
+approximately this number. This can ensure that large genomic regions can
+still be represented while not retrieving tens of millions of lines of data
+per sample.
 }
