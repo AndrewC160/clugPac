@@ -20,7 +20,16 @@ plot_genes(
   text_line_height = 0.2,
   text_nudge_x = 0.005,
   x_trace_genes = "label",
-  x_trace_alpha = 0.3
+  x_trace_alpha = 0.3,
+  gr_tads = NULL,
+  tad_height = 1.5,
+  tad_alpha = 0.1,
+  tad_fill = "gray50",
+  tad_color = NA,
+  tad_linetype = "solid",
+  tad_linewidth = 0.5,
+  tad_y_frac = NULL,
+  gr_eigs
 )
 }
 \arguments{
@@ -55,6 +64,22 @@ plot_genes(
 \item{x_trace_genes}{Gene names/IDs which should have traces drawn to the x-axis. Can be individual names/IDs, as well as "all", "focus" (foreground-only), and "label" (labeled genes only).}
 
 \item{x_trace_alpha}{Opacity of x-axis traces. Defaults to 0.3, can be between zero and 1.}
+
+\item{gr_tads}{GRanges of TADs to be drawn as diamonds in the background; defaults to NULL (none), and will be plotted in series separated by "name" column.}
+
+\item{tad_height}{Y-position at which to center TAD diamonds. Defaults to 1.5 (centered on minimum gene level).}
+
+\item{tad_alpha}{Opacity of TAD diamonds; defaults to 0.1.}
+
+\item{tad_fill}{Fill of TAD diamonds; defaults to "gray50."}
+
+\item{tad_color}{Color of TAD diamonds; defaults to NA (no outline).}
+
+\item{tad_linetype}{Linetype of TADs; defaults to "solid."}
+
+\item{tad_linewidth}{Linewidth of TADs; defaults to 0.5.}
+
+\item{tad_y_frac}{Fraction of the y-axis to scale TADs to; defaults to depend on x-range.}
 }
 \description{
 Given a genomic range, plots a simple gene track using gene annotations from

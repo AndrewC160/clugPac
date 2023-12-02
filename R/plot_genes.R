@@ -21,6 +21,14 @@
 #' @param text_nudge_x Distance to nudge labels in the negative x-direction when staggering stacked labels. Units of fractions of the X-axis, defaults to 0.005 (text is nudged 0.05 of the x-axis per stacked label).
 #' @param x_trace_genes Gene names/IDs which should have traces drawn to the x-axis. Can be individual names/IDs, as well as "all", "focus" (foreground-only), and "label" (labeled genes only).
 #' @param x_trace_alpha Opacity of x-axis traces. Defaults to 0.3, can be between zero and 1.
+#' @param gr_tads GRanges of TADs to be drawn as diamonds in the background; defaults to NULL (none), and will be plotted in series separated by "name" column.
+#' @param tad_height Y-position at which to center TAD diamonds. Defaults to 1.5 (centered on minimum gene level).
+#' @param tad_alpha Opacity of TAD diamonds; defaults to 0.1.
+#' @param tad_fill Fill of TAD diamonds; defaults to "gray50."
+#' @param tad_color Color of TAD diamonds; defaults to NA (no outline).
+#' @param tad_linetype Linetype of TADs; defaults to "solid."
+#' @param tad_linewidth Linewidth of TADs; defaults to 0.5.
+#' @param tad_y_frac Fraction of the y-axis to scale TADs to; defaults to depend on x-range.
 #'
 #' @import ggplot2
 #' @import magrittr
@@ -41,7 +49,9 @@ plot_genes<- function(genomic_region,gr_genes=NULL,label_genes=NULL,label_size=3
                       focus_genes=NULL,background_alpha=0.25,
                       text_genes=NULL,text_biotypes=c("protein_coding","lncRNA"),
                       text_size=2,text_bins=10,text_nudge_y=0.25,text_line_height=0.2,text_nudge_x = 0.005,
-                      x_trace_genes = "label",x_trace_alpha=0.3){
+                      x_trace_genes = "label",x_trace_alpha=0.3,
+                      gr_tads=NULL,tad_height=1.5,tad_alpha=0.1,tad_fill="gray50",tad_color=NA,tad_linetype="solid",tad_linewidth=0.5,tad_y_frac=NULL,
+                      gr_eigs){
   rename  <- dplyr::rename
   mutate  <- dplyr::mutate
   filter  <- dplyr::filter
@@ -51,11 +61,10 @@ plot_genes<- function(genomic_region,gr_genes=NULL,label_genes=NULL,label_size=3
     gr_genes <- gtf_to_genes() %>% keepStandardChromosomes(pruning.mode="coarse")
   }
   gr <- gr_genes[queryHits(findOverlaps(gr_genes,genomic_region))]
-
+  scale_x <- scale_x_continuous(name = grange_desc(genomic_region),
+                                oob = scales::oob_keep,
+                                limits=x_rng,expand=c(0,0),labels = comma)
   base_plot   <- ggplot(data=NULL) +
-    scale_x_continuous(name = grange_desc(genomic_region),
-                       limits=x_rng,expand=c(0,0),labels = comma) +
-    scale_fill_igv(name="Biotype") +
     guides(alpha="none",
            color="none") +
     theme(plot.background = element_rect(fill="white",color=NA),
@@ -103,10 +112,13 @@ plot_genes<- function(genomic_region,gr_genes=NULL,label_genes=NULL,label_size=3
         mutate(text_bin_start = str_match(as.character(text_bin),"^[\\[\\(]([[:digit:]\\.]+)")[,2] %>% as.double %>% ceiling,
                text_bin_end = str_match(as.character(text_bin),"([[:digit:]\\.]+)[\\]\\)]$")[,2] %>% as.double %>% ceiling) %>%
         group_by(text_bin) %>%
-        mutate(text_y1 = max(ymax) + text_nudge_y,
-               text_y2 = text_y1 + text_line_height* row_number() * max(ymax),
+        mutate(nudge_y_lower = row_number() * (text_nudge_y),
+               text_y1 = max(ymax) + text_nudge_y + 0.2 * max(tb_p$ymax),
+               text_y2 = text_y1 + text_line_height * row_number() * max(ymax),
                text_bin_start = text_bin_start - (row_number() * text_nudge_x * diff(x_rng)),
-               text_bin_start = ifelse(text_bin_start < x_rng[1],x_rng[1],text_bin_start))
+               text_bin_start = ifelse(text_bin_start < x_rng[1],x_rng[1],text_bin_start)) %>%
+        ungroup %>%
+        mutate(text_y1 = text_y1 - nudge_y_lower)
     }else{
       tb_labs <- mutate(tb_labs,text_y1 = 0,text_y2 = 0)
     }
@@ -114,30 +126,31 @@ plot_genes<- function(genomic_region,gr_genes=NULL,label_genes=NULL,label_size=3
     # Scale y up for very large windows to represent "zoomed out" scale.
     min_y_scale <- 6 + ceiling(width(genomic_region)/1E6)/2
     y_rng <- c(0,max(c(min_y_scale,tb_labs$text_y2,tb_p$ymax)))
-    scale_y <- scale_y_continuous(name = "Genes",limits=c(-1,y_rng[2]+1),expand=c(0,0))
+    scale_y <- scale_y_continuous(name = "Genes",limits=c(-1,y_rng[2]+1),expand=c(0,0),oob = scales::oob_keep)
 
     #Gene text.
     tb_l <- filter(tb_labs,lab_type == "text")
+    gene_text <- NULL
     if(nrow(tb_l) > 0){
-      base_plot <- base_plot +
+      gene_text <- list(
         geom_segment(data=tb_l,
                      mapping=aes(x=text_bin_start,
                                  xend=text_bin_start,
                                  y=text_y2,yend=text_y1,
                                  alpha=focus_type),
-                     color="gray75") +
+                     color="gray75"),
         geom_segment(data=tb_l,
                      mapping=aes(x=text_bin_start,
                                  xend=start,
                                  y=text_y1,yend=ymax,
                                  alpha=focus_type),
-                     color="gray75") +
+                     color="gray75"),
         geom_segment(data=tb_l,
                      mapping=aes(x=start,
                                  xend=start,
                                  y=ymax,yend=(ymin+ymax)/2,
                                  alpha=focus_type),
-                     color="gray75") +
+                     color="gray75"),
         geom_text(data=tb_l,
                   mapping=aes(x=text_bin_start,
                               y=text_y2,
@@ -145,6 +158,76 @@ plot_genes<- function(genomic_region,gr_genes=NULL,label_genes=NULL,label_size=3
                               alpha=focus_type),
                   hjust=0,vjust=0,
                   size=text_size)
+      )
+    }
+
+    #TADs.
+    geoms_tads  <- NULL
+    if(!is.null(gr_tads)){
+      if(is.null(tad_y_frac)){
+        gr_wid <- width(genomic_region)
+        tad_y_frac<-
+          case_when(gr_wid < 1E5 ~ 1,
+                    gr_wid < 1E6 ~ 0.8,
+                    gr_wid < 1E7 ~ 0.5,
+                    gr_wid < 1E8 ~ 0.2,
+                    TRUE ~ 0.05)
+      }
+      tb_tads <- gr_tads %>%
+        subsetByOverlaps(genomic_region) %>%
+        as_tibble %>%
+        select(seqnames,start,end,name) %>%
+        mutate(tad_idx=row_number()) %>%
+        mutate(x1=start,
+               x2=(start+end)/2,
+               x3=end,
+               x4=x2,
+               y1=0,
+               y2=(end - start)/2,
+               y3=0,
+               y4=-y2) %>%
+        pivot_longer(cols=c(x1,x2,x3,x4,y1,y2,y3,y4),
+                     names_to = c("dim","num"),
+                     names_pattern="(.)(.)",
+                     values_to = "coord") %>%
+        pivot_wider(id_cols = c(seqnames,start,end,name,tad_idx,num),
+                    names_from = dim,values_from = coord) %>%
+        rowwise %>%
+        mutate(off_start = x < x_rng[1],
+               off_end = x > x_rng[2],
+               y = case_when(off_start ~ list(c(-1,1) * (x_rng[1] - x)/2),
+                             off_end ~ list(c(-1,1) * (x - x_rng[2])/2),
+                             TRUE ~ list(y)),
+               x = case_when(off_start ~ list(rep(x_rng[1],length.out=2)),
+                             off_end ~ list(rep(x_rng[2],length.out=2)),
+                             TRUE ~ list(x))) %>%
+        ungroup %>%
+        group_by(tad_idx) %>%
+        mutate(off_start = cumsum(off_start),
+               off_end = cumsum(off_end)) %>%
+        mutate(keep = off_start <= max(off_start) & off_end <= 1) %>%
+        ungroup %>%
+        filter(keep) %>%
+        select(-off_start,-off_end,-keep) %>%
+        unnest(c(x,y)) %>%
+        group_by(name,tad_idx) %>%
+        mutate(num = row_number()) %>%
+        ungroup %>%
+        mutate(y = scale_to(y,-y_rng[2]*tad_y_frac,y_rng[2]*tad_y_frac),
+               y = y + tad_height)
+
+      # base_plot +
+      #   scale_y +
+      #   scale_x +
+      #   geom_polygon(data=tb_tads,mapping=aes(x=x,y=y,color=name,fill=name,group=tad_idx),alpha=0.1,color=NA) +
+      #   theme(legend.position='right')
+      if(nrow(tb_tads) > 0){
+        geoms_tads <-
+          geom_polygon(data=tb_tads,
+                       mapping=aes(x=x,y=y,color=name,fill=name,group=tad_idx),
+                       alpha=tad_alpha,color=tad_color,fill=tad_fill,linetype=tad_linetype,linewidth=tad_linewidth,
+                       show.legend=FALSE)
+      }
     }
 
     #X-axis traces.
@@ -191,8 +274,11 @@ plot_genes<- function(genomic_region,gr_genes=NULL,label_genes=NULL,label_size=3
     }
 
     base_plot  <- base_plot +
+      geoms_tads +
+      gene_text +
       scale_alpha_manual(values=c(foreground=1,background=background_alpha)) +
       scale_color_manual(values=c(foreground="black",background=NA)) +
+      scale_x +
       scale_y +
       geom_polys +
       geom_segs +
