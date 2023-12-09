@@ -14,9 +14,8 @@ Quick function for evaluating all default arguments in a given function.
 If a function to be tested has at least one default specified in the
 function heading, copy the argument and/or the whole set as a string (use
 single/double quotes as needed) and pass to debugDefaultArguments().
-Function identifies each argument, eliminates any without a default, and
-evaluates each remaining argument / default value pair in the top level
-instance.
+Function replaces commas with ';' and '=' with '<<-', then uses
+parse %>% eval to execute each.
 
-For example, with `arbitrario <- function(input_table,fruit="apple", car="sedan", number=4){...}`, feeding `'input_table,fruit="apple", car="sedan", number=4'` to debugDefaultArguments() will add fruit, car, and number to the top environment with their specified values. Useful for debugging functions with mulitiple default arguments, but not intended for use in regular code.
+For example, with `arbitrario <- function(input_table,fruit="apple", car="sedan", number=4){...}`, feeding `'input_table,fruit="apple", car="sedan", number=4'` to debugDefaultArguments() will add fruit, car, and number to the top environment with their specified values. Useful for debugging functions with multiple default arguments, but not intended for use in regular code.
 }

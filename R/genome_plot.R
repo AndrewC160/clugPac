@@ -17,6 +17,7 @@
 #' @import tibble
 #' @import magrittr
 #' @import dplyr
+#' @import BiocGenerics
 #' @import ggplot2
 #'
 #' @export
