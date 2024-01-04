@@ -7,6 +7,7 @@
 plot_karyotype_strip(
   genomic_region,
   window_region = "chrom",
+  show_trace = TRUE,
   trace_line_color = "red",
   trace_point_size = 7,
   trace_line_width = 0.5,

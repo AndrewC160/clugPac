@@ -8,7 +8,8 @@ annotate_and_reduce_gr(
   gr_in,
   retain_funcs,
   include_n = FALSE,
-  include_queryHits = FALSE
+  include_queryHits = FALSE,
+  max_gap = 0
 )
 }
 \arguments{

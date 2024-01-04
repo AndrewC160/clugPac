@@ -30,7 +30,7 @@
 #'
 #' @export
 
-annotate_and_reduce_gr <- function(gr_in,retain_funcs,include_n=FALSE,include_queryHits=FALSE){
+annotate_and_reduce_gr <- function(gr_in,retain_funcs,include_n=FALSE,include_queryHits=FALSE,max_gap=0){
   mutate  <- dplyr::mutate
   arrange <- dplyr::arrange
   select  <- dplyr::select
@@ -38,10 +38,10 @@ annotate_and_reduce_gr <- function(gr_in,retain_funcs,include_n=FALSE,include_qu
   msng_nms <- setdiff(names(retain_funcs),colnames(mcols(gr_in)))
   if(length(msng_nms) > 0) stop("Column names '",paste(msng_nms,collapse=", "),"' not found in <gr_in>.")
 
-  gr_red<- GenomicRanges::reduce(gr_in)
+  gr_red<- GenomicRanges::reduce(gr_in,min.gapwidth=max_gap)
   olaps <- findOverlaps(gr_in,gr_red)
 
-  tb <- as_tibble(mcols(gr_in)[queryHits(olaps),names(retain_funcs)])
+  tb <- as_tibble(mcols(gr_in)[queryHits(olaps),names(retain_funcs),drop=FALSE])
   tb$subjectHits<- subjectHits(olaps)
   tb$queryHits  <- queryHits(olaps)
   tb <- group_by(tb,subjectHits)

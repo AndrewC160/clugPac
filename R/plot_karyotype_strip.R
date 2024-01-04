@@ -32,7 +32,7 @@
 
 # genomic_region <- GRanges("chr15",IRanges(42124999,43124999))
 
-plot_karyotype_strip  <- function(genomic_region,window_region="chrom",trace_line_color="red",trace_point_size=7,trace_line_width=0.5,trace_alpha=0,trace_fill="red",trace_linetype="solid",line_color_in=NA,line_widths_in=0.5,label_size_in=5,label_frac_in=0.02){
+plot_karyotype_strip  <- function(genomic_region,window_region="chrom",show_trace=TRUE,trace_line_color="red",trace_point_size=7,trace_line_width=0.5,trace_alpha=0,trace_fill="red",trace_linetype="solid",line_color_in=NA,line_widths_in=0.5,label_size_in=5,label_frac_in=0.02){
   start <- BiocGenerics::start
   end   <- BiocGenerics::end
   gr_kary <- get_karyotypes()
@@ -109,7 +109,7 @@ plot_karyotype_strip  <- function(genomic_region,window_region="chrom",trace_lin
           axis.title = element_blank(),
           axis.ticks = element_blank(),
           panel.grid = element_blank())
-  if(!is.null(tb_trace)){
+  if(!is.null(tb_trace) & show_trace){
     trace_width <- tb_trace$end[1] - tb_trace$start[1]
     reg_width   <- diff(x_rng)
     if(trace_width <= 0.01 * reg_width){
