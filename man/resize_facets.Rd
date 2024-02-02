@@ -4,17 +4,34 @@
 \alias{resize_facets}
 \title{Resize facets}
 \usage{
-resize_facets(plot_in, silent = FALSE)
+resize_facets(
+  plot_in,
+  vertical = TRUE,
+  horizontal = TRUE,
+  min_x_frac = 0.1,
+  min_y_frac = 0.1
+)
 }
 \arguments{
 \item{plot_in}{GGplot object.}
 
-\item{silent}{Boolean, should warning messages be supressed? Defaults to FALSE.}
+\item{vertical}{Boolean; should panels be scaled vertically? Defaults to TRUE.}
+
+\item{horizontal}{Boolean; should panels be scaled horizontally? Defaults to TRUE.}
+
+\item{min_x_frac}{Minimum fraction to scale panels to horizontally; defaults to 0.1, in which case a panel will never scale down to less than 10% the size of the largest panel.}
+
+\item{min_y_frac}{Minimum fraction to scale panels to vertically; defaults to 0.1, in which case a panel will never scale down to less than 10% the size of the tallest panel.}
 }
 \description{
-Given a GGplot with horizontal facets (typically barplots), build that plot
-using ggplot_build in order to resize facets to fit data points. Has not
-been fully implemented yet, so only works in cases of barplots or simple
-scales, and does not work with vertical facets. Work in progress. Note that
-this function should be a LAST step as things like themes stop working.
+Given a GGplot with horizontal and/or vertical discrete facets, resize facets
+to fit data points based on X and Y ranges in each. Facets can be resized
+vertically (<vertical>=TRUE) and/or horizontally (<horizontal>=TRUE), with
+both being the default. Dimensions are calculated based on the x and y max/
+min values in each row/column of panels, so all row/column panels will have
+the same respective dimensions (i.e., all panels in a row will have the same
+height, all panels in a column will have the same width). Plots are built and
+converted back to ggplot objects before they are returned, so don't expect
+most ggplot behaviors to be applicable after applying this function (in other
+words, plan to apply themes/scales/etc. prior to applying this function).
 }

@@ -1,5 +1,5 @@
 #' @title
-#' Resize facets
+#' Resize facets 2D
 #'
 #' @description
 #' Given a GGplot with horizontal and/or vertical discrete facets, resize facets
@@ -28,7 +28,7 @@
 #'
 #' @export
 
-resize_facets <- function(plot_in,vertical=TRUE,horizontal=TRUE,min_x_frac = 0.1,min_y_frac=0.1){
+resize_facets_2d  <- function(plot_in,vertical=TRUE,horizontal=TRUE,min_x_frac = 0.1,min_y_frac=0.1){
   mutate  <- dplyr::mutate
   filter  <- dplyr::filter
   arrange <- dplyr::arrange
@@ -81,3 +81,42 @@ resize_facets <- function(plot_in,vertical=TRUE,horizontal=TRUE,min_x_frac = 0.1
   }
   return(ggplotify::as.ggplot(p_grd))
 }
+
+
+# resize_facets   <- function(plot_in,silent=FALSE){
+#   p_blt   <- ggplot_build(plot_in)
+#   p_grd   <- ggplot_gtable(p_blt)
+#   fct_szs <- p_blt$data[[1]] %>%
+#     as_tibble() %>%
+#     group_by(PANEL) %>%
+#     summarize(sz = n(),.groups="drop") %>%
+#     vectify(sz,PANEL)
+#   fct_szs <- fct_szs / max(fct_szs)
+#   fct_ps  <- p_blt$layout$facet_params
+#   fct_arr <- case_when(is.null(fct_ps$ncol) & is.null(fct_ps$nrow) ~ "none",
+#                        !is.null(fct_ps$ncol) & !is.null(fct_ps$nrow) ~ "too many",
+#                        is.null(fct_ps$nrow) ~ "vertical",
+#                        TRUE ~ "horizontal")
+#
+#   if(fct_arr == "none"){
+#     return(plot_in)
+#   }else if(fct_arr == "too many"){
+#     if(!silent){message("resize_facets() only works with one-dimensional facets, i.e. one column or one row.")}
+#     return(plot_in)
+#   }else if(fct_arr == "vertical"){
+#     grbs  <- which(as.character(p_grd$heights) == "1null")
+#   }else{
+#     grbs  <- which(as.character(p_grd$widths) == "1null")
+#   }
+#   if(length(fct_szs) != length(grbs)){
+#     if(!silent){message("Incongruent facet dimensions...did you align vertically / horizontally and fail to correctly specify?")}
+#     return(plot_in)
+#   }
+#   if(fct_arr == "vertical"){
+#     p_grd$heights[grbs] <- p_grd$heights[grbs] * fct_szs
+#   }else{
+#     p_grd$widths[grbs]  <- p_grd$widths[grbs] * fct_szs
+#   }
+#   return(ggplotify::as.ggplot(p_grd))
+# }
+
