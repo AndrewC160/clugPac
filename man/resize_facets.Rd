@@ -34,4 +34,8 @@ height, all panels in a column will have the same width). Plots are built and
 converted back to ggplot objects before they are returned, so don't expect
 most ggplot behaviors to be applicable after applying this function (in other
 words, plan to apply themes/scales/etc. prior to applying this function).
+
+NOTE: data appears to depend on the order of geoms added; in more complex
+plots with multiple layers it may be required that the primary geoms are
+added first.
 }

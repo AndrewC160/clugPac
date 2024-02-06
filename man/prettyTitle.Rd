@@ -9,14 +9,25 @@ prettyTitle(
   sep = "_",
   caps = "first",
   preserve_levels = TRUE,
-  preserve_ackronyms = TRUE
+  preserve_acronyms = TRUE,
+  override_words = NULL
 )
 }
 \arguments{
-\item{argument_text}{String representing all arguments from a function. Can include arguments without a default and/or newlines.}
+\item{str_in}{String or vector of strings to convert.}
+
+\item{sep}{Separator between words. Can also be set to "camel" for CamelCase, in which case all capitol letters are treated as the first letter in a given word.}
+
+\item{caps}{Which words should be capitalized? Defaults to "first" in which case only the first word, but can also be "all" for all words. To leave specific words in lower case, use override_words with gsub-compatible regex. For instance, when caps = "all" and override_words=c("a ","with"), "apples_with_a_pigeon" becomes "Apples with a Pigeon."}
+
+\item{preserve_levels}{Boolean; should existing factor levels be updated and preserved (i.e., levels are also changed and order is maintained)? Defaults to TRUE. No effect if input is not a factor.}
+
+\item{preserve_acronyms}{Should acronyms be detected and preserved? Treats subsequent capitol letters as acronyms.}
+
+\item{override_words}{Vector of words to be over-ridden. All output words/levels are compared without case to words in override_words, and if they match they are over-ridden. For instance, "NcDNA" or "mirna" can be replaced with "ncDNA" and "miRNA."}
 }
 \description{
-Given a string, function capitolizes either the first or every word (separated
+Given a string, function capitalizes either the first or every word (separated
 by 'sep'). Runs recursively if given a list or vector, and if the input is a
 factor with levels and 'preserve_levels' is TRUE, existing levels are also
 changed and then reapplied. Otherwise, vectors are returned as character type.

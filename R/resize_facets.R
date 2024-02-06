@@ -13,6 +13,10 @@
 #' most ggplot behaviors to be applicable after applying this function (in other
 #' words, plan to apply themes/scales/etc. prior to applying this function).
 #'
+#' NOTE: data appears to depend on the order of geoms added; in more complex
+#' plots with multiple layers it may be required that the primary geoms are
+#' added first.
+#'
 #' @param plot_in GGplot object.
 #' @param vertical Boolean; should panels be scaled vertically? Defaults to TRUE.
 #' @param horizontal Boolean; should panels be scaled horizontally? Defaults to TRUE.
