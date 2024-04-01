@@ -21,6 +21,7 @@ plot_genes(
   text_nudge_x = 0.005,
   x_trace_genes = "label",
   x_trace_alpha = 0.3,
+  arrow_genes = TRUE,
   gr_tads = NULL,
   tad_height = 1.5,
   tad_alpha = 0.1,
@@ -64,6 +65,8 @@ plot_genes(
 \item{x_trace_genes}{Gene names/IDs which should have traces drawn to the x-axis. Can be individual names/IDs, as well as "all", "focus" (foreground-only), and "label" (labeled genes only).}
 
 \item{x_trace_alpha}{Opacity of x-axis traces. Defaults to 0.3, can be between zero and 1.}
+
+\item{arrow_genes}{Should arrows be drawn for gene directions? Defaults to TRUE.}
 
 \item{gr_tads}{GRanges of TADs to be drawn as diamonds in the background; defaults to NULL (none), and will be plotted in series separated by "name" column.}
 

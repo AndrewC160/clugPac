@@ -9,7 +9,8 @@ annotate_gr(
   gr_subject,
   cols_query,
   cols_subject = NULL,
-  max_gap = 0,
+  max_gap = -1L,
+  min_overlap = 0L,
   as_boolean = FALSE,
   na_val = "",
   collapse_as_string = FALSE,
@@ -25,7 +26,9 @@ annotate_gr(
 
 \item{cols_subject}{Column(s) containing values to be inserted into query columns.}
 
-\item{max_gap}{Maximum distance between features; defaults to 0.}
+\item{max_gap}{Maximum distance between features; defaults to 0bp. Must be set mutually exclusive to min_overlap.}
+
+\item{min_overlap}{Minimum overlap between features; defaults to 1bp. Must be set mutually exclusive to max_gap.}
 
 \item{as_boolean}{Should annotations be TRUE/FALSE (overlapped/not overlapped)? Defaults to FALSE. If TRUE, ignores column values to append.}
 

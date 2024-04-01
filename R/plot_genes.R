@@ -21,6 +21,7 @@
 #' @param text_nudge_x Distance to nudge labels in the negative x-direction when staggering stacked labels. Units of fractions of the X-axis, defaults to 0.005 (text is nudged 0.05 of the x-axis per stacked label).
 #' @param x_trace_genes Gene names/IDs which should have traces drawn to the x-axis. Can be individual names/IDs, as well as "all", "focus" (foreground-only), and "label" (labeled genes only).
 #' @param x_trace_alpha Opacity of x-axis traces. Defaults to 0.3, can be between zero and 1.
+#' @param arrow_genes Should arrows be drawn for gene directions? Defaults to TRUE.
 #' @param gr_tads GRanges of TADs to be drawn as diamonds in the background; defaults to NULL (none), and will be plotted in series separated by "name" column.
 #' @param tad_height Y-position at which to center TAD diamonds. Defaults to 1.5 (centered on minimum gene level).
 #' @param tad_alpha Opacity of TAD diamonds; defaults to 0.1.
@@ -50,6 +51,7 @@ plot_genes<- function(genomic_region,gr_genes=NULL,label_genes=NULL,label_size=3
                       text_genes=NULL,text_biotypes=c("protein_coding","lncRNA"),
                       text_size=2,text_bins=10,text_nudge_y=0.25,text_line_height=0.2,text_nudge_x = 0.005,
                       x_trace_genes = "label",x_trace_alpha=0.3,
+                      arrow_genes=TRUE,
                       gr_tads=NULL,tad_height=1.5,tad_alpha=0.1,tad_fill="gray50",tad_color=NA,tad_linetype="solid",tad_linewidth=0.5,tad_y_frac=NULL,
                       gr_eigs){
   rename  <- dplyr::rename
@@ -288,7 +290,10 @@ plot_genes<- function(genomic_region,gr_genes=NULL,label_genes=NULL,label_size=3
                             fill = gene_biotype,
                             alpha=focus_type,
                             color=focus_type),
-                linewidth=0.25) +
+                linewidth=0.25)
+
+    if(arrow_genes){
+      base_plot <- base_plot +
       geom_segment(data=filter(tb_p,strand != "*" & focus_type != "background" & lab_type != "none"),
                    mapping=aes(x=start2,xend = end2,
                                y=(ymin + ymax)/2,yend=(ymin + ymax) / 2,
@@ -296,6 +301,7 @@ plot_genes<- function(genomic_region,gr_genes=NULL,label_genes=NULL,label_size=3
                                color=focus_type),
                    linewidth=1,
                    arrow = arrow(length = unit(0.5,"lines"),type = "closed"))
+    }
 
     #Gene labels.
     tb_l <- filter(tb_labs,lab_type == "label")

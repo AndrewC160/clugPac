@@ -18,7 +18,7 @@ prettyTitle(
 
 \item{sep}{Separator between words. Can also be set to "camel" for CamelCase, in which case all capitol letters are treated as the first letter in a given word.}
 
-\item{caps}{Which words should be capitalized? Defaults to "first" in which case only the first word, but can also be "all" for all words. To leave specific words in lower case, use override_words with gsub-compatible regex. For instance, when caps = "all" and override_words=c("a ","with"), "apples_with_a_pigeon" becomes "Apples with a Pigeon."}
+\item{caps}{Which words should be capitalized? Defaults to "first" in which case only the first word, but can also be "all" for all words. To leave specific words in lower case, use override_words with gsub-compatible regex. For instance, when caps = "all" and override_words=c("a ","with"), "apples_with_a_pigeon" becomes "Apples with a Pigeon" (note the use of a space in "a ").}
 
 \item{preserve_levels}{Boolean; should existing factor levels be updated and preserved (i.e., levels are also changed and order is maintained)? Defaults to TRUE. No effect if input is not a factor.}
 

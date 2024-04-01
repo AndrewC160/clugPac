@@ -22,5 +22,6 @@ read_bw_track(
 \item{bin_num}{Number of bins to break data into, if desired. Defaults to 1,000, but can also be NULL for no binning.}
 }
 \description{
-BigWig track
+Given a BigWig file and a region of interest, load BigWig data into a
+table format for plotting.
 }

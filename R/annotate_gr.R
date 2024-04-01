@@ -19,7 +19,8 @@
 #' @param gr_subject GRanges object to be overlapped
 #' @param cols_query Column(s) to be created in output GRanges object.
 #' @param cols_subject Column(s) containing values to be inserted into query columns.
-#' @param max_gap Maximum distance between features; defaults to 0.
+#' @param max_gap Maximum distance between features; defaults to 0bp. Must be set mutually exclusive to min_overlap.
+#' @param min_overlap Minimum overlap between features; defaults to 1bp. Must be set mutually exclusive to max_gap.
 #' @param as_boolean Should annotations be TRUE/FALSE (overlapped/not overlapped)? Defaults to FALSE. If TRUE, ignores column values to append.
 #' @param na_val Value to annotate with in the event no overlaps are detected. Defaults to an empty string.
 #' @param collapse_as_string Should annotations from multiple values be collapsed into a single semicolon-separated string? Defaults to FALSE, in which case these are returned as lists.
@@ -35,8 +36,8 @@
 #'
 #' @export
 
-annotate_gr     <- function(gr_query,gr_subject,cols_query,cols_subject=NULL,max_gap=0,as_boolean=FALSE,na_val = "",collapse_as_string=FALSE,first_only=FALSE){
-  olaps   <- findOverlaps(query = gr_query,subject=gr_subject,maxgap = max_gap)
+annotate_gr     <- function(gr_query,gr_subject,cols_query,cols_subject=NULL,max_gap=-1L,min_overlap=0L,as_boolean=FALSE,na_val = "",collapse_as_string=FALSE,first_only=FALSE){
+  olaps   <- findOverlaps(query = gr_query,subject=gr_subject,maxgap = max_gap,minoverlap = min_overlap)
 
   if(missing(as_boolean)){
     #Default to not boolean.
