@@ -11,5 +11,10 @@ oxford_collapse(text_list)
 }
 \description{
 Collapse a list of things into a string with the correct Oxford
-comma (Things, more things, and final things.)
+comma (Things, more things, and final things.) If the list is of length 1 or
+2, text will reflect this without commas.
+
+"eggs"
+"eggs and bacon"
+"eggs, bacon, and jury duty."
 }

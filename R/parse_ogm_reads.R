@@ -77,10 +77,10 @@ parse_ogm_reads <- function(fls_xmap,fls_cmap){
       }
       names(fls_xmap) <- names(fls_cmap)
     }
-  tb_xmap <- lapply(names(fls_xmap), function(nm){
-    local_ogm_reads(gr_window=gr_window,
-                    fls_xmap =fls_xmap[[nm]],
-                    fls_cmap =fls_cmap[[nm]]) %>%
+  tb_xmap <- lapply(1:length(fls_xmap), function(i){
+    nm <- names(fls_xmap)[i]
+    parse_ogm_reads(fls_xmap =fls_xmap[i],
+                    fls_cmap =fls_cmap[i]) %>%
       mutate(name = nm) %>%
       select(name,everything())
     }) %>%
