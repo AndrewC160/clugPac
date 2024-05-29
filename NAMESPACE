@@ -3,6 +3,7 @@
 export(annotate_and_reduce_gr)
 export(annotate_gr)
 export(bgzip_and_tabix)
+export(binned_cna_average)
 export(biotype_palette)
 export(bp_to_distance)
 export(clip_granges)
