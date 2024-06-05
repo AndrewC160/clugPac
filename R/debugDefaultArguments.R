@@ -17,23 +17,23 @@
 #'
 #' @export
 
-debugDefaultArguments <- function(argument_text){
-  argument_text %>%
-    gsub(",",";",.) %>%
-    gsub("=","<<-",.) %>%
-    parse(text=.) %>%
-    eval
-}
+# debugDefaultArguments <- function(argument_text){
+#   argument_text %>%
+#     gsub(",",";",.) %>%
+#     gsub("=","<<-",.) %>%
+#     parse(text=.) %>%
+#     eval
+# }
 #argument_text <- c("a,z,x,y=4,g=2")
 
 #debugDefaultArguments2(argument_text)
 
 
-# debugDefaultArguments <- function(argument_text){
-#   arg_list  <- gsub("\n","",argument_text)
-#   #From https://stackoverflow.com/questions/35347537/using-strsplit-in-r-ignoring-anything-in-parentheses
-#   arg_list  <- strsplit(argument_text, '\\([^)]+,(*SKIP)(*FAIL)|,\\s*', perl=TRUE)[[1]]
-#   arg_list  <- str_match(arg_list,pattern = "(.+)=(.+)")
-#   arg_list  <- arg_list[complete.cases(arg_list),]
-#   apply(arg_list,MARGIN = 1, function(x) eval(parse(text=paste(x[2],"<<-",x[3]))))
-# }
+debugDefaultArguments <- function(argument_text){
+  arg_list  <- gsub("\n","",argument_text)
+  #From https://stackoverflow.com/questions/35347537/using-strsplit-in-r-ignoring-anything-in-parentheses
+  arg_list  <- strsplit(argument_text, '\\([^)]+,(*SKIP)(*FAIL)|,\\s*', perl=TRUE)[[1]]
+  arg_list  <- str_match(arg_list,pattern = "(.+)=(.+)")
+  arg_list  <- arg_list[complete.cases(arg_list),]
+  apply(arg_list,MARGIN = 1, function(x) eval(parse(text=paste(x[2],"<<-",x[3]))))
+}
