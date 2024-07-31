@@ -60,7 +60,7 @@ genome_add_gr_tiles<- function(plot_base_in,gr_input,gr_name_column=NULL,gr_fill
   if(unnamed) tb_regs <- mutate(tb_regs,name=NULL)
   if(nrow(tb_regs) > 0){
     p <- plot_base_in$plot +
-      facet_wrap(.~name,ncol=1,scales='free_y',strip.position = "right") +
+      facet_wrap(.~name,ncol=1,strip.position = "right") +
       geom_rect(data=tb_regs,mapping=aes(fill=fill,color=color,alpha=alpha,linetype=linetype,linewidth=linewidth),
                 ymin=-Inf,ymax=Inf)
     plot_base_out <- plot_base_in

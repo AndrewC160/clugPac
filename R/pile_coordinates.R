@@ -30,16 +30,19 @@ pile_coords     <- function(start_vals,end_vals,seqname_vals = NULL,min_gap=NULL
     gr_in <- GRanges(seqnames=seqname_vals,ranges=IRanges(start_vals,end_vals))
   }
   #"Pile": any contiguous region of reads. Split this way to minimize work within "for" loop.
+  piles     <- GenomicRanges::reduce(gr_in)
+  gr_in$pile<- subjectHits(findOverlaps(gr_in,piles))
+
   if(!is.null(min_gap)){
     gr_in <- resize(gr_in,width=width(gr_in) + min_gap,fix="center")
   }
-  piles     <- GenomicRanges::reduce(gr_in)
-  gr_in$pile<- subjectHits(findOverlaps(gr_in,piles))
+
   tb_lst <- gr_in %>%
     as_tibble %>%
     mutate(idx = row_number(),ymin=0) %>%
     arrange(seqnames,start,end) %>%
     group_split(pile)
+
   lapply(tb_lst, function(tb_in) {
     x <- as.data.frame(tb_in)
     x_maxs <- c(0)

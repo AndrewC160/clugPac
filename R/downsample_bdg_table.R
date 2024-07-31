@@ -31,36 +31,38 @@ downsample_bdg_table  <- function(table_in,bin_num = 2000,name_col="name",bin_fu
     tb_out <- table_in %>%
       as_tibble %>%
       dplyr::group_split(seqnames) %>%
-      lapply(downsample_bdg_table) %>%
+      lapply(downsample_bdg_table,bin_num=bin_num,name_col=name_col,bin_function=bin_function) %>%
       do.call(rbind,.)
-    return(tb_out)
-  }
-  if(!is.null(name_col) & !is.null(table_in[,name_col])){
-    tb_in <- rename(table_in,name = !!as.name(name_col))
   }else{
-    tb_in <- mutate(table_in,name = "")
-  }
-  x_rng   <- c(min(table_in$start),max(table_in$end))
-
-  if(diff(x_rng) <= bin_num){
-    table_out   <- table_in
-  }else{
-    brks  <- seq(x_rng[1],x_rng[2],length.out = bin_num)
-    names(brks) <- c(1:bin_num)
-
-    tb_out<- tb_in %>%
-      mutate(mid = (start + end) / 2,
-             bin = cut(mid,breaks = brks,include.lowest = TRUE,dig.lab = 12)) %>%
-      group_by(seqnames,name,bin) %>%
-      summarize(score = bin_function(score),.groups="drop") %>%
-      mutate(start=str_match(as.character(bin),"^[\\[\\(]([:digit:]+)")[,2] %>% as.integer,
-             end = str_match(as.character(bin),"([[:digit:]\\.]+)[\\)\\]]$")[,2] %>% as.integer) %>%
-      select(seqnames,start,end,score,name)
-
-    if(!is.null(name_col)){
-      tb_out  <- rename(tb_out,!!as.name(name_col) := name)
+    if(!is.null(name_col) & !is.null(table_in[,name_col])){
+      tb_in <- rename(table_in,name = !!as.name(name_col))
     }else{
-      tb_out  <- select(tb_out,-name)
+      tb_in <- mutate(table_in,name = "")
+    }
+    x_rng   <- c(min(table_in$start),max(table_in$end))
+    bin_wid <- table_in$end[1] - table_in$start[1]
+    bin_num_init  <- diff(x_rng)/bin_wid
+
+    if(bin_num_init < bin_num){
+      tb_out   <- table_in
+    }else{
+      brks  <- seq(x_rng[1],x_rng[2],length.out = bin_num)
+      names(brks) <- c(1:bin_num)
+
+      tb_out<- tb_in %>%
+        mutate(mid = (start + end) / 2,
+               bin = cut(mid,breaks = brks,include.lowest = TRUE,dig.lab = 12)) %>%
+        group_by(across(-c("start","end","mid"))) %>%
+        summarize(score = bin_function(score),.groups="drop") %>%
+        mutate(start=str_match(as.character(bin),"^[\\[\\(]([:digit:]+)")[,2] %>% as.integer,
+               end = str_match(as.character(bin),"([[:digit:]\\.]+)[\\)\\]]$")[,2] %>% as.integer) %>%
+        select(seqnames,start,end,score,name,everything(),-bin)
+
+      if(!is.null(name_col)){
+        tb_out  <- rename(tb_out,!!as.name(name_col) := name)
+      }else{
+        tb_out  <- select(tb_out,-name)
+      }
     }
   }
   return(tb_out)

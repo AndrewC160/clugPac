@@ -30,7 +30,7 @@
 #'
 #' @export
 
-annotate_and_reduce_gr <- function(gr_in,retain_funcs,include_n=FALSE,include_queryHits=FALSE,max_gap=0){
+annotate_and_reduce_gr <- function(gr_in,retain_funcs,include_n=FALSE,include_queryHits=FALSE,max_gap=1){
   mutate  <- dplyr::mutate
   arrange <- dplyr::arrange
   select  <- dplyr::select

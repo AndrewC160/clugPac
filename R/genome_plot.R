@@ -31,7 +31,12 @@ genome_plot <- function(gr_window,x_name=NULL,y_name="Pileup"){
              BiocGenerics::end(gr_win))
   y_rng <- c(0,1)
   if(is.null(x_name)) x_name <- grange_desc(gr_win)
-  x_scale<- scale_x_continuous(name=x_name,limits=x_rng,expand=c(0,0),labels=prettyBP,oob=scales::oob_keep)
+  if(width(gr_window) > 1E5){
+    lab_func <- prettyBP
+  }else{
+    lab_func <- comma
+  }
+  x_scale<- scale_x_continuous(name=x_name,limits=x_rng,expand=c(0,0),labels=lab_func,oob=scales::oob_keep)
   p <- ggplot(tb_win,mapping=aes(xmin=start,xmax=end,ymin=0,ymax=1)) +
     x_scale +
     scale_fill_identity() +

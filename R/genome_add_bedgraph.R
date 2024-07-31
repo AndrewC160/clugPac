@@ -58,6 +58,7 @@ genome_add_bedgraph <- function(plot_base_in,bdg_files,y_name=NULL,bdg_fills="bl
     summarize(ymin=min(score),
               ymax=max(score),
               .groups="drop")
+
   y_scale <- scale_y_continuous(name=y_name,expand=expansion(mult=c(0,0.1)),labels=comma)
 
   p <- plot_base_in$plot +

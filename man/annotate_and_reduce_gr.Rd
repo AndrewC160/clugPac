@@ -9,7 +9,7 @@ annotate_and_reduce_gr(
   retain_funcs,
   include_n = FALSE,
   include_queryHits = FALSE,
-  max_gap = 0
+  max_gap = 1
 )
 }
 \arguments{
