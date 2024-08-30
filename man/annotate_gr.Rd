@@ -7,12 +7,12 @@
 annotate_gr(
   gr_query,
   gr_subject,
-  cols_query,
+  cols_query = NULL,
   cols_subject = NULL,
   max_gap = -1L,
   min_overlap = 0L,
   as_boolean = FALSE,
-  na_val = "",
+  na_vals = "",
   collapse_as_string = FALSE,
   first_only = FALSE
 )
@@ -30,9 +30,9 @@ annotate_gr(
 
 \item{min_overlap}{Minimum overlap between features; defaults to 1bp. Must be set mutually exclusive to max_gap.}
 
-\item{as_boolean}{Should annotations be TRUE/FALSE (overlapped/not overlapped)? Defaults to FALSE. If TRUE, ignores column values to append.}
+\item{as_boolean}{Should annotations be TRUE/FALSE (overlapped/not overlapped)? Defaults to FALSE. If TRUE, column values are ignored in favor of boolean values..}
 
-\item{na_val}{Value to annotate with in the event no overlaps are detected. Defaults to an empty string.}
+\item{na_vals}{List of value(s) to annotate with in the event no overlaps are detected. Defaults to an empty string. Can be length 1 to apply to all columns, or one entry per column. Note that it must be a list if different data types are used in each column.}
 
 \item{collapse_as_string}{Should annotations from multiple values be collapsed into a single semicolon-separated string? Defaults to FALSE, in which case these are returned as lists.}
 
