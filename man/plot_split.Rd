@@ -10,7 +10,7 @@ plot_split(plot_in)
 \item{plot_in}{GGPlot object to split.}
 }
 \description{
-Split plot into basic top/right/bottom/left/main panels. Useful when 
+Split plot into basic top/right/bottom/left/main panels. Useful when
 plot_grid fails and when more specific controls are needed for plot component
 heights/widths. Currently useful for broken cowplot::plot_grid() problem, but
 very much a work in progress.

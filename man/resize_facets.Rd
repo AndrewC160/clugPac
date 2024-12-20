@@ -9,7 +9,10 @@ resize_facets(
   vertical = TRUE,
   horizontal = TRUE,
   min_x_frac = 0.1,
-  min_y_frac = 0.1
+  min_y_frac = 0.1,
+  return_fractions = FALSE,
+  height_fracs = NULL,
+  width_fracs = NULL
 )
 }
 \arguments{
@@ -22,6 +25,12 @@ resize_facets(
 \item{min_x_frac}{Minimum fraction to scale panels to horizontally; defaults to 0.1, in which case a panel will never scale down to less than 10% the size of the largest panel.}
 
 \item{min_y_frac}{Minimum fraction to scale panels to vertically; defaults to 0.1, in which case a panel will never scale down to less than 10% the size of the tallest panel.}
+
+\item{return_fractions}{Boolean; should the fraction values be returned, in which case no plot is returned but a list of vectors is (for use with later plot calls).}
+
+\item{vertical_fracs}{List of ratio values to override vertical resizing.}
+
+\item{horizontal_fracs}{List of ratio values to override horizontal resizing.}
 }
 \description{
 Given a GGplot with horizontal and/or vertical discrete facets, resize facets
@@ -34,6 +43,12 @@ height, all panels in a column will have the same width). Plots are built and
 converted back to ggplot objects before they are returned, so don't expect
 most ggplot behaviors to be applicable after applying this function (in other
 words, plan to apply themes/scales/etc. prior to applying this function).
+
+In the event that preset plot widths / heights are to be generated/used, the
+<return_fractions> option will return only a list of vertical/horizontal
+facet size ratios, and if these values are provided to this function using
+the vertical_/horizontal_fracs arguments, respectively, these values will
+override the normal calculation behavior.
 
 NOTE: data appears to depend on the order of geoms added; in more complex
 plots with multiple layers it may be required that the primary geoms are

@@ -36,11 +36,13 @@
 #'
 #' @export
 
-annotate_gr     <- function(gr_query,gr_subject,cols_query=NULL,cols_subject=NULL,max_gap=-1L,min_overlap=0L,as_boolean=FALSE,na_vals = "",collapse_as_string=FALSE,first_only=FALSE){
+annotate_gr <- function(gr_query,gr_subject,cols_query=NULL,cols_subject=NULL,max_gap=-1L,min_overlap=0L,as_boolean=FALSE,na_vals = "",collapse_as_string=FALSE,first_only=FALSE){
+  if(is.null(cols_query) & is.null(cols_subject)) stop("No column names specified for gr_query and/or gr_subject.")
+  cols_query<- cols_query %||% cols_subject # If no query columns provided, default to the subject column names.
   olaps   <- findOverlaps(query = gr_query,subject=gr_subject,maxgap = max_gap,minoverlap = min_overlap)
   if(length(as_boolean) == 1){
-    as_boolean <- rep(as_boolean,length(cols_subject))
-  }else if(length(as_boolean) != length(cols_subject)){
+    as_boolean <- rep(as_boolean,length(cols_query))
+  }else if(length(as_boolean) != length(cols_query)){
     stop("If provided, length of 'as_boolean' (",length(as_boolean),
          ") should be either 1 to apply to all columns OR equal to the number of columns (",
          length(cols_query),").")
@@ -50,7 +52,7 @@ annotate_gr     <- function(gr_query,gr_subject,cols_query=NULL,cols_subject=NUL
   }else if(length(na_vals) != length(cols_subject)){
     stop("If <na_vals> are specified, they must either be length 1 to apply to all columns OR the same length as <cols_subject>.")
   }
-  cols_query <- cols_query %||% cols_subject # If no query columns provided, default to the subject column names.
+
   for(i in 1:length(cols_query)){
     q_col <- cols_query[i]
     s_col <- cols_subject[i]
@@ -61,6 +63,9 @@ annotate_gr     <- function(gr_query,gr_subject,cols_query=NULL,cols_subject=NUL
       mcols(gr_query)[q_col] <- FALSE
       mcols(gr_query[queryHits(olaps)])[q_col] <- TRUE
     }else{
+      if(is.null(cols_subject)){
+        stop("If appended column is not boolean, at least one cols_subject value must be provided.")
+      }
       if(length(cols_query) != length(cols_subject)){
         stop("Query and subject column names must be the same length.")
       }

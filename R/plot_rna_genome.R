@@ -50,17 +50,19 @@ plot_rna_genome <- function(gr_window_in,gr_genes_in,sample_names_in,sample_gene
     mutate(y_idx = as.integer(sample_name)) %>%
     ungroup %>%
     group_by(gene_name) %>%
-    mutate(ratio = tpm / mean(tpm,na.rm=TRUE)) %>%
+    mutate(ratio = tpm / median(tpm,na.rm=TRUE)) %>%
     rowwise %>%
     mutate(x_jitter = x_idx + runif(n=1,min = -0.25,max=0.25)) %>%
     ungroup
 
-  if(plot_metric == "Ratio"){
+  if(tolower(plot_metric) == "ratio"){
     tb_p  <- mutate(tb_p,score=ratio)
     z_lab <- "TPM ratio"
-  }else if(plot_metric == "TPM"){
+  }else if(tolower(plot_metric) == "tpm"){
     tb_p  <- mutate(tb_p,score=tpm)
     z_lab <- "TPM"
+  }else{
+    stop("<plot_metric> must be either 'TPM' or 'Ratio'.")
   }
   if(z_scale=="log2"){
     tb_p  <- mutate(tb_p,score=log2(score))
@@ -176,6 +178,7 @@ plot_rna_genome <- function(gr_window_in,gr_genes_in,sample_names_in,sample_gene
             panel.grid = element_blank())
   }
   if(include_gene_track!="none"){
+    p_genes <- NULL
     if(include_gene_track=="pileup"){
       p_genes <- plot_genes_pileup(genomic_region = gr_window_in,gr_genes=gr_genes_in)
     }else if(include_gene_track=="genes"){
@@ -183,7 +186,10 @@ plot_rna_genome <- function(gr_window_in,gr_genes_in,sample_names_in,sample_gene
                               text_bins = 40,x_trace_alpha = 0.3,
                               text_genes = as.character(sample_genes_in),
                               x_trace_genes = unique(as.character(tb_p$gene_name)))
+    }else{
+      stop("<include_gene_track> should be 'none', 'pileup', or 'genes'.")
     }
+
     p_genes <- plot_split(p_genes +
                             theme(plot.margin = unit(c(0,0,-0.2,0),"lines"),
                                   plot.background = element_rect(fill="white",color=NA),
