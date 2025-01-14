@@ -4,7 +4,7 @@
 \alias{swap_columns}
 \title{Swap Columns}
 \usage{
-swap_columns(tb_in, colA, colB, condition = NULL)
+swap_columns(tb_in, colA, colB, condition = NULL, ignore_missing = TRUE)
 }
 \arguments{
 \item{tb_in}{Tibble to modify.}
@@ -13,7 +13,9 @@ swap_columns(tb_in, colA, colB, condition = NULL)
 
 \item{colB}{Column name of second column.}
 
-\item{condition}{Function of colA and colB values to determine if they should be swapped, or the name of a third column with boolean values. Defaults to NULL, i.e. swap all values.}
+\item{condition}{Function of colA and colB values to determine if they should be swapped, or the name of a third column with Boolean values. Defaults to NULL, i.e. swap all values.}
+
+\item{ignore_missing}{Boolean; if one or both columns specified are missing in the data table, should the table be returned unchanged? Defaults to FALSE, in which case function errors out.}
 }
 \description{
 Given a table with at least two named columns, swap the values in columnA
