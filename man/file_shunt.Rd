@@ -4,12 +4,16 @@
 \alias{file_shunt}
 \title{File shunt}
 \usage{
-file_shunt(fileA, fileB)
+file_shunt(fileA, fileB, create_dir = FALSE, over_write = FALSE)
 }
 \arguments{
 \item{fileA}{Origin file.}
 
 \item{fileB}{Destination file.}
+
+\item{create_dir}{Boolean; should the output directory be created if it is missing? Defaults to FALSE.}
+
+\item{over_write}{Boolean; should an existing fileB be over-written? Defaults to FALSE.}
 }
 \description{
 Given file names A and B, if file B does not exist copy file A to create B.
