@@ -1,0 +1,257 @@
+﻿Year of drug’s first FDA- approval,FDA-approved drug(s) a,FDA drug label listed biomarker(s) b,Class of agent(s) c,Mechanism of action or drug target c,Genes,Targeted therapy,Precision oncology therapy,Can a DNA/NGS-based method be used for biomarker detection? 
+1998-2001*,Alemtuzumab,,"Hematopoietic protein binding antibody, ADC or cytotoxin",CD52-directed cytolytic antibody,,Y,N,NA
+1998-2001*,Alitretinoin,,Retinoid,Vitamin A derivative; activates retinoid receptors PML-RAR?,PML-RAR,Y,N,NA
+1998-2001*,Arsenic trioxide,PML-RAR? Fusion,Cytotoxic chemotherapy,Chemotherapeutic agent; targets PML-RAR?,PML-RAR,N,Y,Y
+1998-2001*,Bexarotene,,Retinoid,Selective activator of retinoid X receptors (RXR)s,,Y,N,NA
+1998-2001*,Capecitabine,,Nucleoside metabolic inhibitor,Nucleoside metabolic inhibitor,,N,N,NA
+1998-2001*,Denileukin diftitox,CD25+,"Hematopoietic protein binding antibody, ADC or cytotoxin",CD25-directed cytotoxin,IL2RA,Y,Y,N
+1998-2001*,Epirubicin,,Cytotoxic chemotherapy,Anthracycline topoisomerase inhibitor,,N,N,NA
+1998-2001*,Exemestane,ER+,Hormone therapy,Aromatase inhibitor,,Y,Y,N
+1998-2001*,Gemtuzumab ozogamicin,CD33+,"Hematopoietic protein binding antibody, ADC or cytotoxin",Anti-CD33 antibody,CD33,Y,Y,N
+2018,Lorlatinib,ALK+ (ALK Fusions),Small molecule kinase inhibitor,Multi-targeted kinase inhibitor (targets include ALK and ROS1 among others),ALK;ROS1,Y,Y,Y
+1998-2001*,Temozolomide,,Cytotoxic chemotherapy,Alkylating agent,,N,N,NA
+1998-2001*,Thalidomide,,Other Immunotherapy,Immunomodulatory drug,,N,N,NA
+1998-2001*,Trastuzumab,HER2+ (ERBB2 Amplification),Monoclonal antibody,Anti-HER2 (ERBB2) antibody,ERBB2,Y,Y,Y
+1998-2001*,Triptorelin,,Hormone therapy,Gonadotropin-releasing hormone (GnRH) agonist,,Y,N,NA
+1998-2001*,Valrubicin,,Cytotoxic chemotherapy,Anthracycline,,N,N,NA
+2002,Fulvestrant,HR+/ HER2-,Hormone therapy,Selective estrogen receptor degrader (SERD),,Y,Y,N
+2002,Ibritumomab tiuxetan,,"Hematopoietic protein binding antibody, ADC or cytotoxin",Anti-CD20 antibody,MS4A1,Y,N,NA
+2002,Oxaliplatin,,Cytotoxic chemotherapy,Alkylating agent,,N,N,NA
+2003,Abarelix,,Hormone therapy,Gonadotropin-releasing hormone (GnRH) antagonist,,Y,N,NA
+2003,Bortezomib,,Proteasome inhibitors/protein synthesis inhibitor,Proteasome inhibitor,,Y,N,NA
+2003,Gefitinib,"EGFR L858R, Exon 19 Deletions",Small molecule kinase inhibitor,EGFR tyrosine kinase inhibitor,EGFR,Y,Y,Y
+2003,Tositumomab and Iodine I 131 Tositumomab,CD20+,"Hematopoietic protein binding antibody, ADC or cytotoxin",Anti-CD20 antibody,MS4A1,Y,Y,N
+2004,Azacitidine,,Nucleoside metabolic inhibitor,Nucleoside metabolic inhibitor,,N,N,NA
+2004,Bevacizumab,,Monoclonal antibody,Anti-VEGF antibody,VEGF,Y,N,NA
+2004,Cetuximab,KRAS Wildtype and EGFR-expressing,Monoclonal antibody,Anti-EGFR antibody,EGFR,Y,Y,Y
+2004,Clofarabine,,Nucleoside metabolic inhibitor,Nucleoside metabolic inhibitor,,N,N,NA
+2004,Erlotinib,"EGFR L858R, Exon 19 Deletions",Small molecule kinase inhibitor,EGFR tyrosine kinase inhibitor,EGFR,Y,Y,Y
+2004,Pemetrexed disodium,,Cytotoxic chemotherapy,Folate analog metabolic inhibitor,,N,N,NA
+2005,Nelarabine,,Nucleoside metabolic inhibitor,Nucleoside metabolic inhibitor,,N,N,NA
+1998-2001*,Imatinib,"*Ph+ (BCR-ABL1 Fusion)
+*KIT+
+*PDGFRA, PDGFRB Fusions
+*PDGFB Fusions
+*FIP1L1-PDGFRA fusion",Multikinase inhibitor,"Multi-targeted kinase inhibitor (targets include BCR-ABL, KIT, PDGFRA)",KIT;PDGFRA;BCR-ABL,Y,Y,Y
+2019,Pexidartinib,,Multikinase inhibitor,"Multi-targeted kinase inhibitor (targets include CSF1R, KIT and FLT3)",CSF1R;KIT;FLT3,Y,N,NA
+2006,Decitabine,,Nucleoside metabolic inhibitor,Nucleoside metabolic inhibitor,,N,N,NA
+2006,Lenalidomide,,Other Immunotherapy,Immunomodulatory drug,,N,N,NA
+2006,Panitumumab,KRAS and NRAS Wildtype and EGFR-expressing,Monoclonal antibody,Anti-EGFR antibody,EGFR,Y,Y,Y
+2019,Erdafitinib,"FGFR3-TACC3 Fusion, FGFR3-BAIAP2L1 Fusion, FGFR3 S249C, R248C, G370C, Y373C",Small molecule kinase inhibitor,Multi-targeted kinase inhibitor (targets include FGFR1/2/3/4 among others),FGFR1;FGFR2;FGFR3;FGFR4,Y,Y,Y
+2006,Vorinostat,,HDAC inhibitor,Histone deacetylase (HDAC) inhibitor,HDAC,Y,N,NA
+2007,Ixabepilone,,Cytotoxic chemotherapy,Microtubule inhibitor,,N,N,NA
+2007,Lapatinib,HER2 Overexpression (ERBB2 Amplification),Small molecule kinase inhibitor,Dual tyrosine kinase inhibitor (targets EGFR and ERBB2),EGFR;ERBB2,Y,Y,Y
+2017,Midostaurin,"FLT3 ITD Mutations, TKD Mutations I836 and D835",Multikinase inhibitor,"Multi-targeted kinase inhibitor (targets include FLT3, VEGFR2, KIT and PDGFR)",FLT3;KDR;KIT;PDGFR,Y,Y,Y
+2007,Temsirolimus,,Large molecule inhibitor,mTOR inhibitor,MTOR,Y,N,NA
+2008,Bendamustine hydrochloride,,Cytotoxic chemotherapy,Alkylating agent,,N,N,NA
+2008,Degarelix,,Hormone therapy,Gonadotropin-releasing hormone (GnRH) antagonist,,Y,N,NA
+2009,Everolimus,"TSC1, TSC2 Oncogenic Mutations",Large molecule inhibitor,mTOR inhibitor,MTOR,Y,Y,Y
+2009,Ofatumumab,,"Hematopoietic protein binding antibody, ADC or cytotoxin",Anti-CD20 antibody,MS4A1,Y,N,NA
+2019,Fedratinib,,Multikinase inhibitor,Multi-targeted kinase inhibitor (targets include JAK2 and FLT3),JAK2;FLT3,Y,N,NA
+2009,Pralatrexate,,Cytotoxic chemotherapy,Folate analog metabolic inhibitor,,N,N,NA
+2009,Romidepsin,,HDAC inhibitor,Histone deacetylase (HDAC) inhibitor,HDAC,Y,N,NA
+2010,Cabazitaxel,,Cytotoxic chemotherapy,Microtubule inhibitor,,N,N,NA
+2010,Eribulin,,Cytotoxic chemotherapy,Microtubule inhibitor,,N,N,NA
+2010,Sipuleucel-T,,Other Immunotherapy,Autologous cellular immunotherapy,,N,N,NA
+2011,Abiraterone,,Hormone therapy,Antiandrogen; CYP17 inhibitor,CYP17A1,Y,N,NA
+2011,Asparaginase erwinia chrysanthemi,,Other,Asparagine-specific enzyme,,N,N,NA
+2011,Brentuximab,CD30+,"Hematopoietic protein binding antibody, ADC or cytotoxin",CD30-directed antibody-drug conjugate,TNFRSF8,Y,Y,N
+2020,Avapritinib,"*PDGFRA Exon 18 Mutations
+*KIT D816",Small molecule kinase inhibitor,"Multi-targeted kinase inhibitor (targets include KIT D816V, PDGFRA, PDGFRA D842, KIT exon 11, 11/17 and 17 mutants)",KIT;PDGFRA,Y,Y,Y
+2011,Ipilimumab,,Immune checkpoint inhibitor,Anti-CTLA-4 antibody,CTLA4,Y,N,NA
+2011,Peginterferon alfa-2b,,Interferon/cytokine/chemokine,Alpha interferon,,N,N,NA
+2011,Ruxolitinib,,Small molecule kinase inhibitor,JAK1/2 inhibitor,JAK1;JAK2,Y,N,NA
+2019,Entrectinib,"*NTRK1, NTRK2, NTRK3 Fusions
+*ROS1 Fusions",Small molecule kinase inhibitor,"Multi-targeted kinase inhibitor (targets include NTRK1/2/3, ROS1 and ALK among others)",NTRK1;NTRK2;NTRK3;ROS1;ALK,Y,Y,Y
+2011,Vemurafenib,BRAF V600,Small molecule kinase inhibitor,BRAF inhibitor,BRAF,Y,Y,Y
+2012,Aflibercept,,Other,VEGF inhibitor; VEGF-Trap,VEGF,Y,N,NA
+2012,Axitinib,,Multikinase inhibitor,VEGFR1/2/3 inhibitor,FLT1;KDR;FLT3,Y,N,NA
+2021,Umbralisib,,Multikinase inhibitor,Multi-targeted kinase inhibitor (targets include PI3K? and CK1? among others),PI3K;CSNK1A1,Y,N,NA
+2023,Repotrectinib,"*ROS1 Fusions 
+*NTRK Fusions",Small molecule kinase inhibitor,Multi-targeted kinase inhibitor (targets include ROS1 and NTRK1/2/3),ROS1;NTRK1;NTRK2;NTRK3,Y,Y,Y
+2012,Carfilzomib,,Proteasome inhibitors/protein synthesis inhibitor,Proteasome inhibitor,,Y,N,NA
+2012,Enzalutamide,,Hormone therapy,Antiandrogen; AR inhibitor,,Y,N,NA
+2012,Omacetaxine mepesuccinate,,Proteasome inhibitors/protein synthesis inhibitor,Cephalotaxine ester and protein synthesis inhibitor,,Y,N,NA
+2012,Pertuzumab + Trastuzumab,HER2+ (ERBB2 Amplification),Monoclonal antibody combination,Anti-HER2 (ERBB2) antibody + Anti-HER2 (ERBB2) antibody,ERBB2,Y,Y,Y
+2006,Dasatinib,Ph+ (BCR-ABL1 Fusion),Multikinase inhibitor,"Multi-targeted kinase inhibitor (targets include SRC, BCR-ABL1, KIT and PDGFR? among others)",SRC;BRC-ABL1;KIT;PDGFR,Y,Y,Y
+2005,Sorafenib,,Multikinase inhibitor,"Multi-targeted kinase inhibitor (targets include VEGFR1/2/3, BRAF, KIT, FLT3 and PDGFR? among others)",FLT1;KDR;FLT3;BRAF;KIT;FLT3;PDGFR,Y,N,NA
+2012,Vismodegib,,Small molecule inhibitor,SMO inhibitor,SMO,Y,N,NA
+2013,Ado-trastuzumab emtansine,HER2+ (ERBB2 Amplification),Antibody drug conjugate,HER2 (ERBB2)-directed antibody and microtubule inhibitor conjugate,ERBB2,Y,Y,Y
+2013,Afatinib,"EGFR L858R, G719X, L861Q, S768I, Exon 19 Deletions",Small molecule kinase inhibitor,EGFR tyrosine kinase inhibitor,EGFR,Y,Y,Y
+2013,Dabrafenib,BRAF V600E/K,Small molecule kinase inhibitor,BRAF inhibitor,BRAF,Y,Y,Y
+2013,Ibrutinib,17p del,Small molecule kinase inhibitor,BTK inhibitor,BTK,Y,Y,Y
+2013,Obinutuzumab,,"Hematopoietic protein binding antibody, ADC or cytotoxin",Anti-CD20 antibody,MS4A1,Y,N,NA
+2013,Pomalidomide,,Other Immunotherapy,Immunomodulatory drug; Thalidomide analog,,N,N,NA
+2013,Ra 223 dichloride,,Radiotherapy,Alpha particle-emitting radioactive therapeutic agent,,N,N,NA
+2013,Trametinib,BRAF V600E/K,Small molecule kinase inhibitor,MEK1/2 inhibitor,MAP2K1;MAP2K2,Y,Y,Y
+2014,Belinostat,,HDAC inhibitor,Histone deacetylase (HDAC) inhibitor,HDAC,Y,N,NA
+2014,Blinatumomab,CD19+,Bispecific T-cell engager,Bispecific CD19-directed CD3 T-cell engager,CD19,Y,Y,N
+2014,Ceritinib,ALK+ (ALK Fusions),Small molecule kinase inhibitor,ALK inhibitor,ALK,Y,Y,Y
+2014,Dabrafenib + Trametinib,BRAF V600E/K,Small molecule kinase inhibitor combination,BRAF inhibitor + MEK1/2 inhibitor,BRAF;MAP2K1;MAP2K2,Y,Y,Y
+2014,Idelalisib,,Small molecule inhibitor,PIK3K? inhibitor,PIK3K,Y,N,NA
+2014,Lanreotide,,Hormone therapy,Somatostatin analog,,Y,N,NA
+2014,Mercaptopurine,,Cytotoxic chemotherapy,Purine analog; interferes with nucleic acid synthesis,,N,N,NA
+2014,Nivolumab,MSI-H,Immune checkpoint inhibitor,Anti-PD-1 antibody,PDCD1,Y,Y,Y
+2014,Olaparib,"*BRCA1, BRCA2 Oncogenic Mutations  
+*ATM, BARD1, BRCA1, BRCA2, BRIP1, CDK12, CHEK1, CHEK2, FANCL, PALB2, RAD51B, RAD51C, RAD51D, RAD54 Oncogenic Mutations",Small molecule inhibitor,PARP inhibitor,PARP,Y,Y,Y
+2014,Pembrolizumab,"*MSI-H or dMMR
+*TMB-H
+*PD-L1-expressing
+*pMMR",Immune checkpoint inhibitor,Anti-PD-1 antibody,PDCD1,Y,Y,Y
+2014,Ramucirumab,,Monoclonal antibody,Anti-VEGFR2 antibody,KDR,Y,N,NA
+2014,Siltuximab,,Interferon/cytokine/chemokine,Interleukin-6 (IL-6) antagonist,IL6,N,N,NA
+2015,Alectinib,ALK+ (ALK Fusions),Small molecule kinase inhibitor,ALK inhibitor,ALK,Y,Y,Y
+2015,Vemurafenib + Cobimetinib ,BRAF V600E/K,Small molecule kinase inhibitor combination,BRAF inhibitor + MEK1/2 inhibitor,BRAF;MAP2K1;MAP2K2,Y,Y,Y
+2015,Daratumumab,,"Hematopoietic protein binding antibody, ADC or cytotoxin",Anti-CD38 antibody,CD38,Y,N,NA
+2015,Dinutuximab,,Monoclonal antibody,Anti-GD2 antibody,B4GALNT1,Y,N,NA
+2015,Elotuzumab,,"Hematopoietic protein binding antibody, ADC or cytotoxin",Anti-SLAMF7 antibody,SLAMF7,Y,N,NA
+2015,Ipilimumab + Nivolumab,"*MSI-H or dMMR
+*PD-L1-expressing",Immune checkpoint inhibitor,Anti-CTLA-4 antibody + Anti-PD1 antibody,CTLA4;PDCD1,Y,Y,Y
+2015,Ixazomib,,Proteasome inhibitors/protein synthesis inhibitor,Proteasome inhibitor,,Y,N,NA
+2021,Tivozanib,,Multikinase inhibitor,"Multi-targeted kinase inhibitor (targets include VEGFR1/2/3, KIT and PDGFR?)",FLT1;KDR;FLT3;KIT;PDGFR,Y,N,NA
+2015,Necitumumab,,Monoclonal antibody,Anti-EGFR antibody,EGFR,Y,N,NA
+2015,Osimertinib,"EGFR T790M, L858R, Exon 19 Deletions",Small molecule kinase inhibitor,EGFR tyrosine kinase inhibitor with T790M,EGFR,Y,Y,Y
+2015,Palbociclib,HR+/ HER2-,Small molecule kinase inhibitor,CDK4/6 inhibitor,CDK4;CDK6,Y,Y,N
+2015,Panobinostat,,HDAC inhibitor,Histone deacetylase (HDAC) inhibitor,HDAC,Y,N,NA
+2015,Sonidegib,,Small molecule inhibitor,SMO inhibitor,SMO,Y,N,NA
+2015,Talimogene laherparepvec,,Other,Oncolytic viral therapy,,N,N,NA
+2015,Trabectedin,,Cytotoxic chemotherapy,Alkylating agent,,N,N,NA
+2015,Trifluridine/ tipiracil,,Nucleoside metabolic inhibitor,Nucleoside metabolic inhibitor/Thymidine phosphorylase inhibitor,,N,N,NA
+2016,Atezolizumab,PD-L1-expressing,Immune checkpoint inhibitor,Anti-PDL-1 antibody,CD274,Y,Y,N
+2016,Olaratumab,,Monoclonal antibody,Anti-PDGFR? antibody,PDGFR,Y,N,NA
+2016,Rucaparib,"BRCA1, BRCA2 Oncogenic Mutations",Small molecule inhibitor,PARP inhibitor,PARP,Y,Y,Y
+2016,Venetoclax,,Small molecule inhibitor,BCL-2 inhibitor,BCL2,Y,N,NA
+2017,Abemaciclib,HR+/ HER2-,Small molecule kinase inhibitor,CDK4/6 inhibitor,CDK4;CDK6,Y,Y,N
+2017,Acalabrutinib,,Small molecule kinase inhibitor,BTK inhibitor,BTK,Y,N,NA
+2017,Avelumab,,Immune checkpoint inhibitor,Anti-PDL-1 antibody,CD274,Y,N,NA
+2017,Axicabtagene ciloleucel,,CAR T-cell therapy,CAR T-cell therapy (CD-19 directed),CD19,Y,N,NA
+2017,Brigatinib,ALK+ (ALK Fusions),Small molecule kinase inhibitor,ALK inhibitor,ALK,Y,Y,Y
+2017,Copanlisib,,Small molecule inhibitor,PIK3K inhibitor,PIK3K,Y,N,NA
+2017,Daunorubicin + Cytarabine,,Cytotoxic chemotherapy,Anthracycline topoisomerase inhibitor + nucleoside metabolic inhibitor,,N,N,NA
+2017,Durvalumab,dMMR,Immune checkpoint inhibitor,Anti-PDL-1 antibody,,Y,Y,N
+2017,Enasidenib,"IDH2 R140Q/L/G/W, R172G/K/M/S/W",Small molecule inhibitor,IDH2 inhibitor,IDH2,Y,Y,Y
+2017,Inotuzumab Ozogamicin,CD22+,"Hematopoietic protein binding antibody, ADC or cytotoxin",CD22-directed antibody-drug conjugate,CD22,Y,Y,N
+2011,Crizotinib,"*ALK+ (ALK Fusions)
+*ROS1+ (ROS1 Fusions)",Multikinase inhibitor,"Multi-targeted receptor tyrosine kinase inhibitor (targets include ALK, ROS1 and MET)",ALK;ROS1;MET,Y,Y,Y
+2017,Neratinib,HER2+ (ERBB2 Amplification),Small molecule kinase inhibitor,EGFR//HER2 (ERBB2)/HER4 (ERBB4) inhibitor,EGFR;ERBB2;ERBB4,Y,Y,Y
+2017,Niraparib,"BRCA1, BRCA2 Oncogenic Mutations",Small molecule inhibitor,PARP inhibitor,PARP,Y,Y,Y
+2017,Ribociclib,HR+/ HER2-,Small molecule kinase inhibitor,CDK4/6 inhibitor,CDK4;CDK6,Y,Y,Y
+2017,Tisagenlecleucel,,CAR T-cell therapy,CAR T-cell therapy (CD-19 directed),CD19,Y,N,NA
+2018,Apalutamide,,Hormone therapy,Antiandrogen; AR inhibitor,AR,Y,N,NA
+2018,Encorafenib + Binimetinib,BRAF V600E/K,Small molecule kinase inhibitor combination,BRAF inhibitor + MEK1/2 inhibitor,BRAF;MAP2K1;MAP2K2,Y,Y,Y
+2018,Calaspargase pegol,,Other,Asparagine specific-enzyme,,N,N,NA
+2018,Cemiplimab,PD-L1-expressing,Immune checkpoint inhibitor,Anti-PD-1 antibody,PDCD1,Y,Y,N
+2018,Dacomitinib,"EGFR L858R, Exon 19 Deletions",Small molecule kinase inhibitor,EGFR tyrosine kinase inhibitor,EGFR,Y,Y,Y
+2018,Duvelisib,,Small molecule inhibitor,PI3K?/? inhibitor,PI3K,Y,N,NA
+2011,Vandetanib,,Multikinase inhibitor,"Multi-targeted receptor tyrosine kinase inhibitor (targets include VEGFR, EGFR and RET)",VEGFR;EGFR;RET,Y,N,NA
+2018,Glasdegib,,Small molecule inhibitor,SMO inhibitor,SMO,Y,N,NA
+2018,Iobenguane,,Radiotherapy,Radioactive therapeutic agent,,N,N,NA
+2018,Ivosidenib,IDH1 R132C/G/H/L/S,Small molecule inhibitor,IDH1 inhibitor,IDH1,Y,Y,Y
+2018,Larotrectinib,"NTRK1, NTRK2, NTRK3 Fusions",Small molecule kinase inhibitor,NTRK1/2/3 inhibitor,NTRK1;NTRK2;NTRK3,Y,Y,Y
+2012,Cabozantinib,,Multikinase inhibitor,"Multi-targeted receptor tyrosine kinase inhibitor (targets include VEGFR1/2/3, AXL, KIT, RET and ROS1 among others)",FLT1;KDR;FLT3;AXL;KIT;RET;ROS1,Y,N,NA
+2018,Lutetium Lu 177 dotatate,Somatostatin Receptor,Hormone therapy,Radiolabeled somatostatin analog,,Y,Y,N
+2018,Mogamulizumab,,Interferon/cytokine/chemokine,Anti-CCR4 antibody,CCR4,N,N,NA
+2018,Moxetumomab pasudotox,,"Hematopoietic protein binding antibody, ADC or cytotoxin",CD22-directed antibody-drug conjugate,CD22,Y,N,NA
+2018,Tagraxofusp,,"Hematopoietic protein binding antibody, ADC or cytotoxin",CD123-directed cytotoxin,IL3RA,Y,N,NA
+2018,Talazoparib,"*BRCA1, BRCA2 Oncogenic Mutations
+*ATM, ATR, BRCA1, BRCA2, CDK12, CHEK2, FANCA, MLH1, MRE11, NBN, PALB2, RAD51C
+Oncogenic Mutations",Small molecule inhibitor,PARP inhibitor,PARP,Y,Y,Y
+2019,Alpelisib + Fulvestrant,"PIK3CA E545G, Q546E, E545A, H1047R, C420R, H1047Y, Q546R, H1047L, E542K, E545D, E545K",Small molecule inhibitor and hormone therapy combination,?-specific PI3K inhibitor + selective estrogen receptor degrader (SERD),PI3K;SERD,Y,Y,Y
+2019,Darolutamide,,Hormone therapy,Antiandrogen; AR inhibitor,AR,Y,N,NA
+2019,Enfortumab vedotin,,Antibody drug conjugate,Nectin-4-directed antibody and microtubule inhibitor conjugate,NECTIN4,Y,N,NA
+2015,Lenvatinib,,Multikinase inhibitor,"Multi-targeted receptor tyrosine kinase inhibitor (targets include VEGFR1/2/3, FGFR1/2/3/4, KIT, RET and PDGFR? among others)",FLT1;KDR;FLT3;FGFR1;FGFR2;FGFR3;FGFR4;KIT;RET;PDGFR,Y,N,NA
+2006,Sunitinib,KIT+,Multikinase inhibitor,"Multi-targeted receptor tyrosine kinase inhibitor (targets include VEGFR1/2/3, KIT, FLT3, CSF1R and PDGFR?/? among others)",FLT1;KDR;FLT3;KIT;FLT3;CSF1R;PDGFR,Y,Y,Y
+2012,Bosutinib,Ph+ (BCR-ABL1 Fusion),Multikinase inhibitor,Multi-targeted tyrosine kinase inhibitor (targets include BCR-ABL1 and SRC family kinases),SRC;BRC-ABL1;KIT;PDGFR,Y,Y,Y
+2007,Nilotinib,Ph+ (BCR-ABL1 Fusion),Multikinase inhibitor,"Multi-targeted tyrosine kinase inhibitor (targets include BCR-ABL1, PDGFR and KIT among others)",PDGFR;KIT,Y,Y,Y
+2019,Polatuzumab vedotin,,"Hematopoietic protein binding antibody, ADC or cytotoxin",CD79b-directed antibody-drug conjugate,CD79B,Y,N,NA
+2019,Selinexor,,Small molecule inhibitor,Nuclear export inhibitor (XPO1 inhibitor),XPO1,Y,N,NA
+2019,Trastuzumab deruxtecan,"*HER2+ (ERBB2 Amplification)
+*HER2-low
+*ERBB2 Oncogenic Mutations",Antibody drug conjugate,HER2 (ERBB2)-directed antibody and topoisomerase inhibitor conjugate,ERBB2,Y,Y,Y
+2019,Zanubrutinib,,Small molecule kinase inhibitor,BTK inhibitor,BTK,Y,N,NA
+2020,Atezolizumab + Vemurafenib + Cobimetinib,BRAF V600,Small molecule inhibitor and immune checkpoint inhibitor combination,Anti-PDL-1 antibody + BRAF inhibitor + MEK1/2 inhibitor,CD274;BRAF;MAP2K1;MAP2K2,Y,Y,Y
+2012,Ponatinib,"Ph+ (BCR-ABL1 Fusion) or
+ABL1 T315I",Multikinase inhibitor,"Multi-targeted tyrosine kinase inhibitor (targets include BCR-ABL1, VEGFR, PDGFR, FGFR and SRC family members among others)",VEGFR;PDGFR;FGFR;SRC,Y,Y,Y
+2020,Belantamab mafodotin,,"Hematopoietic protein binding antibody, ADC or cytotoxin",BCMA-directed antibody-drug conjugate,TNFRSF17,Y,N,NA
+2020,Brexucabtagene autoleucel,,CAR T-cell therapy,CAR T-cell therapy (CD-19 directed),CD19,Y,N,NA
+2020,Capmatinib,MET Exon 14 Skipping Mutations,Small molecule kinase inhibitor,MET inhibitor,MET,Y,Y,Y
+2020,Decitabine + Cedazuridine (INQOVI),,Cytotoxic chemotherapy,Nucleoside metabolic inhibitor + cytidine deaminase inhibitor,,N,N,NA
+2020,Encorafenib + Cetuximab,BRAF V600E,Small molecule inhibitor and monoclonal antibody combination,BRAF inhibitor + Anti-EGFR antibody,BRAF;EGFR,Y,Y,Y
+2020,Isatuximab,,"Hematopoietic protein binding antibody, ADC or cytotoxin",Anti-CD38 antibody,CD38,Y,N,NA
+2020,Lurbinectedin,,Cytotoxic chemotherapy,Alkylating agent,,N,N,NA
+2020,Margetuximab,HER2+ (ERBB2 Amplification),Monoclonal antibody,Anti-HER2 (ERBB2) antibody,ERBB2,Y,Y,Y
+2020,Naxitamab,,Monoclonal antibody,Anti-GD2 antibody,B4GALNT1,Y,N,NA
+2020,Pemigatinib,"*FGFR2 Fusions
+*FGFR1 Fusions",Small molecule kinase inhibitor,FGFR1/2/3 inhibitor,FGFR1;FGFR2;FGFR3,Y,Y,Y
+2020,Pralsetinib,RET Fusions and Oncogenic Mutations,Small molecule kinase inhibitor,"RET inhibitor (also reported to inhibit other kinases including DDR1, NTRK3, FLT3 and FGFR1/2 among others)",DDR1;RET;NTRK3;FLT3;FGFR1;FGFR2,Y,Y,Y
+2020,Relugolix,,Hormone therapy,Gonadotropin-releasing hormone (GnRH) antagonist,,Y,N,NA
+2020,Ripretinib,KIT/PDGFRA inhibitor,Small molecule kinase inhibitor,KIT/PDGFRA D816,KIT;PDGFRA,Y,Y,Y
+2020,Sacituzumab govitecan,HR+/HER2-,Antibody drug conjugate,TROP2-directed antibody topoisomerase inhibitor conjugate,TACSTD2,Y,Y,N
+2020,Selpercatinib,RET Fusions and Oncogenic Mutations,Small molecule kinase inhibitor,RET inhibitor (also reported to inhibit other kinases including VEGFR1/2/3 and FGFR1/2/3),RET;FLT1;KDR;FLT3;FGFR1;FGFR2;FGFR3,Y,Y,Y
+2020,Selumetinib,NF1 Oncogenic Mutations,Small molecule kinase inhibitor,MEK1/2 inhibitor,MAP2K1;MAP2K2,Y,Y,Y
+2020,Tafasitamab,,"Hematopoietic protein binding antibody, ADC or cytotoxin",CD19-directed cytolytic monoclonal antibody,CD19,Y,N,NA
+2020,Tazemetostat,"*EZH2 Y646F, A692V, Y646C, Y646S, Y646N, Y646H, A682G
+*SMARCB1 Deletion",Small molecule inhibitor,EZH2 inhibitor (methyltransferase inhibitor),EZH2,Y,Y,Y
+2020,Tucatinib + Trastuzumab,"*HER2+ (ERBB2 Amplifiaction)
+*KRAS and NRAS Wildtype and HER2+ (ERBB2 Amplification)",Small molecule inhibitor and monoclonal antibody combination,HER2 (ERBB2) inhibitor + Anti-HER2 (ERBB2) antibody,ERBB2,Y,Y,Y
+2021,Amivantamab,"*EGFR Exon 20 Insertions 
+*EGFR Exon 19 Deletions, L858R",Monoclonal antibody,EGFR-MET bispecific antibody,EGFR,Y,Y,Y
+2021,Asciminib,"Ph+ (BCR-ABL1 Fusion)
+or ABL1 T315I",Small molecule kinase inhibitor,ABL/BCR-ABL1 tyrosine kinase inhibitor,ABL1,Y,Y,Y
+2021,Belzutifan,VHL Oncogenic Mutations,Small molecule inhibitor,HIF-2? inhibitor,EPAS1,Y,Y,Y
+2021,Dostarlimab,*dMMR                                                     *dMMR or MSI-H,Immune checkpoint inhibitor,Anti PD-1 antibody,PDCD1,Y,Y,Y
+2021,Idecabtagene vicleucel,,CAR T-cell therapy,CAR T-cell therapy (BCMA-directed),TNFRSF17,Y,N,NA
+2021,Infigratinib,FGFR2 Fusions,Small molecule kinase inhibitor,FGFR1/2/3 inhibitor,FGFR1;FGFR2;FGFR3,Y,Y,Y
+2021,Lisocabtagene maraleucel,,CAR T-cell therapy,CAR T-cell therapy (CD-19 directed),CD19,Y,N,NA
+2021,loncastuximab tesirine,,"Hematopoietic protein binding antibody, ADC or cytotoxin",CD19-directed antibody-drug conjugate,CD19,Y,N,NA
+2021,Melphalan flufenamide,,Cytotoxic chemotherapy,Alkylating agent,,N,N,NA
+2021,Mobocertinib,EGFR Exon 20 Insertions,Small molecule kinase inhibitor,EGFR Exon 20 inhibitor,EGFR,Y,Y,Y
+2021,Sirolimus,,Large molecule inhibitor,mTOR inhibitor,MTOR,Y,N,NA
+2021,Sotorasib,KRAS G12C,Small molecule inhibitor,KRAS G12C inhibitor,KRAS,Y,Y,Y
+2021,Tepotinib,MET Exon 14 Skipping Mutations,Small molecule kinase inhibitor,MET inhibitor,MET,Y,Y,Y
+2021,Tisotumab vedotin,,Antibody drug conjugate,Tissue factor-directed antibody microtubule inhibitor conjugate,,Y,N,NA
+2012,Regorafenib,KIT+,Multikinase inhibitor,"Multi-targeted tyrosine kinase inhibitor (targets include KIT, RET, VEGFR1/2/3, FGFR1/2, PDGFR? among others)",KIT;RET;FLT1;KDR;FLT3;FGFR1;FGFR2;PDGFR,Y,Y,Y
+2021,Trastuzumab + Pembrolizumab,HER2+ (ERBB2 Amplification),Monoclonal antibody and immune checkpoint inhibitor combination,Anti-HER2 (ERBB2) antibody + Anti-PD-1 antibody,ERBB2;PDCD1,Y,Y,Y
+2018,Gilteritinib,"FLT3 ITD Mutations, TKD Mutations I836 and D835",Small molecule kinase inhibitor,"Multi-targeted tyrosine kinase inhibitor (targets include mutant and WT FLT3, AXL and ALK)",FLT3;AXL;ALK,Y,Y,Y
+2022,Adagrasib,KRAS G12C,Small molecule inhibitor,KRAS G12C inhibitor,KRAS,Y,Y,Y
+2022,Ciltacabtagene autoleucel,,CAR T-cell therapy,CAR T-cell therapy (BCMA-directed),TNFRSF17,Y,N,NA
+2022,Futibatinib,FGFR2 Fusions,Small molecule kinase inhibitor,FGFR1/2/3 inhibitor,FGFR1;FGFR2;FGFR3,Y,Y,Y
+2022,Mirvetuximab soravtansine,FR?,Antibody drug conjugate,Folate receptor alpha-directed antibody microtubule inhibitor conjugate,,Y,Y,N
+2022,Mosunetuzumab,,Bispecific T-cell engager,Bispecific CD20-directed CD3 T-cell engager,MS4A1,Y,N,NA
+2022,Nadofaragene firadenovec,,Gene therapy,Adenoviral vector-based gene therapy carrying IFN?2b,IFN,Y,N,NA
+2022,Nivolumab and relatlimab (Opdualag),,Immune checkpoint inhibitor,Anti-PD-1 antibody + Anti-LAG-3 antibody,PDCD1;LAG3,Y,N,NA
+2022,Olutasidenib,IDH1 R132C/G/H/L/S,Small molecule inhibitor,IDH1 inhibitor,IDH1,Y,Y,Y
+2022,Pluvicto,PSMA+,Radiotherapy,Radioligand therapeutic agent,,Y,Y,N
+2022,Tebentafusp,HLA-A*02:01-positivity,Bispecific T-cell engager,Bispecific gp100 peptide-HLA-A*02:01-directed T-cell receptor CD3 T cell engager,,Y,Y,N
+2022,Teclistamab,,Bispecific T-cell engager,Bispecific BCMA-directed CD3 T-cell engager,TNFRSF17,Y,N,NA
+2022,Tremelimumab,,Immune checkpoint inhibitor,Anti-CTLA-4 antibody,CTLA4,Y,N,NA
+2023,Capivasertib,"PIK3CA, AKT1 or PTEN Oncogenic Mutations and HR+/HER2-",Small molecule kinase inhibitor,AKT1/2/3 inhibitor,AKT1;AKT2;AKT3,Y,Y,Y
+2023,Elacestrant,"ESR1 Ligand-binding domain missense mutations and
+ER+/HER2-",Hormone therapy,Selective estrogen receptor degrader (SERD),ESR1;ESR2,Y,Y,Y
+2023,Elranatamab,,Bispecific T-cell engager,Bispecific BCMA-directed CD3 T-cell engager,TNFRSF17,Y,N,NA
+2023,Enfortumab vedotin + Pembrolizumab,,Antibody drug conjugate and immune checkpoint inhibitor combination ,Nectin-4-directed antibody and microtubule inhibitor conjugate + Anti-PD-1 antibody,NECTIN4;PDCD1,Y,N,NA
+2023,Epcoritamab ,,Bispecific T-cell engager,Bispecific CD20-directed CD3 T-cell engager,MS4A1,Y,N,NA
+2023,Fruquintinib,,Small molecule kinase inhibitor,VEGFR1/2/3 inhibitor,FLT1;KDR;FLT3,Y,N,NA
+2023,Glofitamab,,Monoclonal antibody,CD20-CD3 bispecific antibody,MS4A1,Y,N,NA
+2023,Pirtobrutinib,,Small molecule kinase inhibitor,BTK inhibitor,BTK,Y,N,NA
+2023,Quizartinib,FLT3 ITD Mutations,Small molecule inhibitor,FLT3 inhibitor,FLT3,Y,Y,Y
+2009,Pazopanib,,Multikinase inhibitor,"Multi-targeted tyrosine kinase inhibitor (targets include VEGFR1/2/3, PDGFR?/?, KIT, FGFR1/3 among others)",FLT1;KDR;FLT3;PDGFR;KIT;FGFR1;FGFR2;FGFR3,Y,N,NA
+2023,Retifanlimab,,Immune checkpoint inhibitor,Anti-PD-1 antibody,PDCD1,Y,N,NA
+2023,Talquetamab,,Bispecific T-cell engager,Bispecific GPRC5D-directed CD3 T-cell engager,GPRC5D,Y,N,NA
+2023,Toripalimab,,Immune checkpoint inhibitor,Anti PD-1 antibody,PDCD1,Y,N,NA
+2023,Eflornithine,,Small molecule inhibitor,Ornithine decarboxylase inhibitor ,,Y,N,NA
+2024,Lifileucel ,,Other Immunotherapy,Tumor-infiltrating lymphocyte therapy,,Y,N,NA
+2024,Nogapendekin alfa inbakicept,,Other Immunotherapy,Interleukin-15 (IL-15) antagonist,,Y,N,NA
+2024,Tovorafenib,"BRAF Fusions, BRAF Rearrangement, BRAF V600 ",Small molecule kinase inhibitor,RAF inhibitor,RAF1,Y,Y,Y
+2024,Tarlatamab,,Bispecific T-cell engager,Bispecific DLL3-directed CD3 T-cell engager,DLL3,Y,N,NA
+2024,Imetelstat,,Telomerase inhibitor,Telomerase template antagonist,,Y,N,NA
+2024,Afamitresgene autoleucel,"HLA-A*02:01P, -A*02:02P, -A*02:03P, or -A*02:06P positive and MAGE-A4 antigen positive",T cell receptor (TCR) therapy,MAGE-A4-directed TCR therapy,MAGEA4,Y,Y,N
+2024,Vorasidenib,"IDH1 R132H/C/G/S/L, IDH2 R172K/M/W/S/G",Small molecule inhibitor,IDH1/IDH2 inhibitor,IDH1;IDH2,Y,Y,Y
+2024,Lazertinib + Amivantamab,"EGFR L858R, Exon 19 Deletions",Small molecule kinase inhibitor and monoclonal antibody combination,EGFR tyrosine kinase inhibitor + EGFR-MET bispecific antibody,EGFR;MET,Y,Y,Y
+2024,Inavolisib + Fulvestrant + Palbociclib,"PIK3CA Oncogenic Mutations, HR+/HER2-",Small molecule inhibitor and hormone therapy combination,?-specific PI3K inhibitor + selective estrogen receptor degrader + CDK4/6 inhibitor,PI3K;CDK4;CDK6;ESR1;ESR2,Y,Y,Y
+2024,Adagrasib + Cetuximab,KRAS G12C,Small molecule inhibitor and monoclonal antibody combination,KRAS G12C inhibitor + Anti-EGFR antibody,KRAS,Y,Y,Y
+2024,Zolbetuximab,HER2- and CLDN18.2+,Monoclonal antibody,CDLN18.2-directed cytolytic antibody,CLDN18,Y,Y,N
+2024,Obecabtagene autoleucel,,CAR T-cell therapy,CAR T-cell therapy (CD19-directed),CD19,Y,N,NA
+2024,Revumenib,KMT2A Rearrangement,Small molecule inhibitor,Menin inhibitor,MEN1,Y,Y,Y
+2024,Zanidatamab,HER2+ (ERBB2 Amplification),Monoclonal antibody,Anti-HER2 (ERBB2) antibody,ERBB2,Y,Y,Y
+2024,Zenocutuzumab,NRG1 Fusion,Bispecific T-cell engager,Bispecific HER2/HER3-directed T-cell engager,ERBB2;ERBB3,Y,Y,Y

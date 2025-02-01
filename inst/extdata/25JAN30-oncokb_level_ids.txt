@@ -1,0 +1,14 @@
+1	FDA-approved drugs
+2	Standard care
+3	Clinical evidence
+4	Biological evidence
+R1	Standard of care biomarker predictive of resistance to an FDA-approved drug in this indication.
+R2	Compelling clinical evidence supports the biomarker as being predictive of resistance to a drug.
+Dx1	(Hematologic only) FDA/professional guideline-recognized biomarker required for diagnosis in this indication.
+Dx2	(Hematologic only) FDA/professional guideline-recognized biomarker that supports diagnosis in this indication.
+Dx3	(Hematologic only) Biomarker that may assist disease diagnosis in this indication based on clinical evidence.
+Px1	(Hematologic only) DA/professional guideline-recognized biomarker prognostic in this indication based on well-powered studie(s).
+Px2	FDA and/or professional guideline-recognized biomarker prognostic in this indication based on a signle or multiple small studies.
+Px3	Biomarker is prognostic in this indication based on clinical evidence in well-powered studies.
+Fda2	Cancer mutations with evidence of clinical significance
+Fda3	Cancer mutations with evidence of potential clinical significance
