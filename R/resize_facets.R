@@ -73,7 +73,7 @@ resize_facets <- function(plot_in,vertical=TRUE,horizontal=TRUE,min_x_frac = 0.1
                   .groups="drop") %>%
         mutate(range = ymax - ymin,
                frac = range / max(range),
-               frac = ifelse(frac < min_x_frac,min_x_frac,frac)) %>%
+               frac = ifelse(frac < min_y_frac,min_y_frac,frac)) %>%
         vectify(frac,y_idx)
     }
 
@@ -90,7 +90,7 @@ resize_facets <- function(plot_in,vertical=TRUE,horizontal=TRUE,min_x_frac = 0.1
                   .groups="drop") %>%
         mutate(range = xmax - xmin,
                frac = range / max(range),
-               frac = ifelse(frac < min_y_frac,min_y_frac,frac)) %>%
+               frac = ifelse(frac < min_x_frac,min_x_frac,frac)) %>%
         vectify(frac,x_idx)
     }
 
