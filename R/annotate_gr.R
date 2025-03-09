@@ -14,7 +14,10 @@
 #' string separated by semicolons (collapse_as_string; can be slow) or reduced
 #' to its first element (first_only). Function can also accept multiple query
 #' and subject columns, provided these are the same length.
-#'s
+#'
+#' If a null value is provided to gr_query, columns of NA values will be added
+#' to the original query and retruned.
+#'
 #' @param gr_query GRanges object to be annotated.
 #' @param gr_subject GRanges object to be overlapped
 #' @param cols_query Column(s) to be created in output GRanges object.
@@ -39,52 +42,59 @@
 annotate_gr <- function(gr_query,gr_subject,cols_query=NULL,cols_subject=NULL,max_gap=-1L,min_overlap=0L,as_boolean=FALSE,na_vals = "",collapse_as_string=FALSE,first_only=FALSE){
   if(is.null(cols_query) & is.null(cols_subject)) stop("No column names specified for gr_query and/or gr_subject.")
   cols_query<- cols_query %||% cols_subject # If no query columns provided, default to the subject column names.
-  olaps   <- findOverlaps(query = gr_query,subject=gr_subject,maxgap = max_gap,minoverlap = min_overlap)
-  if(length(as_boolean) == 1){
-    as_boolean <- rep(as_boolean,length(cols_query))
-  }else if(length(as_boolean) != length(cols_query)){
-    stop("If provided, length of 'as_boolean' (",length(as_boolean),
-         ") should be either 1 to apply to all columns OR equal to the number of columns (",
-         length(cols_query),").")
-  }
-  if(length(na_vals) == 1){
-    na_vals <- rep(na_vals,length(cols_subject))
-  }else if(length(na_vals) != length(cols_subject)){
-    stop("If <na_vals> are specified, they must either be length 1 to apply to all columns OR the same length as <cols_subject>.")
-  }
 
-  for(i in 1:length(cols_query)){
-    q_col <- cols_query[i]
-    s_col <- cols_subject[i]
-    na_val<- na_vals[i]
-    a_bool<- as_boolean[i]
+  if(is.null(gr_subject)){
+    mtx <- matrix(ncol=length(cols_query),nrow = length(gr_query))
+    colnames(mtx) <- cols_query
+    mcols(gr_query) <- cbind(mcols(gr_query),mtx)
+  }else{
+    olaps   <- findOverlaps(query = gr_query,subject=gr_subject,maxgap = max_gap,minoverlap = min_overlap)
+    if(length(as_boolean) == 1){
+      as_boolean <- rep(as_boolean,length(cols_query))
+    }else if(length(as_boolean) != length(cols_query)){
+      stop("If provided, length of 'as_boolean' (",length(as_boolean),
+           ") should be either 1 to apply to all columns OR equal to the number of columns (",
+           length(cols_query),").")
+    }
+    if(length(na_vals) == 1){
+      na_vals <- rep(na_vals,length(cols_subject))
+    }else if(length(na_vals) != length(cols_subject)){
+      stop("If <na_vals> are specified, they must either be length 1 to apply to all columns OR the same length as <cols_subject>.")
+    }
 
-    if(a_bool){
-      mcols(gr_query)[q_col] <- FALSE
-      mcols(gr_query[queryHits(olaps)])[q_col] <- TRUE
-    }else{
-      if(is.null(cols_subject)){
-        stop("If appended column is not boolean, at least one cols_subject value must be provided.")
-      }
-      if(length(cols_query) != length(cols_subject)){
-        stop("Query and subject column names must be the same length.")
-      }
+    for(i in 1:length(cols_query)){
+      q_col <- cols_query[i]
+      s_col <- cols_subject[i]
+      na_val<- na_vals[i]
+      a_bool<- as_boolean[i]
 
-      q_tb <- as_tibble(olaps) %>%
-        mutate(subject_vals = mcols(gr_subject)[,s_col][subjectHits]) %>%
-        group_by(queryHits) %>%
-        summarize(subject_vals = list(subject_vals),.groups="drop")
-      if(collapse_as_string){
-        q_tb <- q_tb %>%
-          rowwise %>%
-          mutate(subject_vals = paste(subject_vals,collapse=";"))
-      }else if(first_only){
-        q_tb <- q_tb %>%
-          mutate(subject_vals = sapply(subject_vals,function(x) x[[1]]))
+      if(a_bool){
+        mcols(gr_query)[q_col] <- FALSE
+        mcols(gr_query[queryHits(olaps)])[q_col] <- TRUE
+      }else{
+        if(is.null(cols_subject)){
+          stop("If appended column is not boolean, at least one cols_subject value must be provided.")
+        }
+        if(length(cols_query) != length(cols_subject)){
+          stop("Query and subject column names must be the same length.")
+        }
+
+        q_tb <- as_tibble(olaps) %>%
+          mutate(subject_vals = mcols(gr_subject)[,s_col][subjectHits]) %>%
+          group_by(queryHits) %>%
+          summarize(subject_vals = list(subject_vals),.groups="drop")
+        if(collapse_as_string){
+          q_tb <- q_tb %>%
+            rowwise %>%
+            mutate(subject_vals = paste(subject_vals,collapse=";"))
+        }else if(first_only){
+          q_tb <- q_tb %>%
+            mutate(subject_vals = sapply(subject_vals,function(x) x[[1]]))
+        }
+        q_tb  <- as.data.frame(q_tb)
+        mcols(gr_query)[q_col] <- na_val
+        mcols(gr_query)[[q_col]][q_tb$queryHits] <- q_tb$subject_vals
       }
-      q_tb  <- as.data.frame(q_tb)
-      mcols(gr_query)[q_col] <- na_val
-      mcols(gr_query)[[q_col]][q_tb$queryHits] <- q_tb$subject_vals
     }
   }
   return(gr_query)
