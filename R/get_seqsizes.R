@@ -17,6 +17,7 @@
 #' @import tidyr
 #' @import magrittr
 #' @import GenomicRanges
+#' @import scales
 #'
 #' @export
 
@@ -29,11 +30,13 @@ get_seqsizes    <- function(coord_adjust = NULL,seqsize_file=NULL,as_granges = F
   if(!is.null(coord_adjust)){
     return(setNames(start(coord_adjust) + vec_out[as.character(seqnames(coord_adjust))],NULL))
   }else if(as_granges){
+    seq_cols  <- setNames(hue_pal()(length(vec_out)),names(vec_out))
     tibble(seqnames=names(vec_out),
            start = 1,end = vec_out) %>%
       mutate(start = as.double(start),
              end = as.double(end)) %>%
-      mutate(adj_start = 1 + cumsum(dplyr::lag(end,default = 0))) %>%
+      mutate(adj_start = 1 + cumsum(dplyr::lag(end,default = 0)),
+             color = seq_cols[as.character(seqnames)]) %>%
       makeGRangesFromDataFrame(keep.extra.columns = TRUE) %>%
       return()
   }else{

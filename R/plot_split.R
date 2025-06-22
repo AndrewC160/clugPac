@@ -67,6 +67,7 @@ plot_split  <- function(plot_in){
   if(length(panel_right) == 0) panel_right <- NULL
 
   #Bottom panel.
+  ## Need to fix bottom panel to allow for multiple axes (for instance when facet_wrap() is in the x-direction).
   p_axis  <- get_plot_component_list(g_tb,"axis-b",return_all=TRUE)
   p_ttl   <- get_plot_component_list(g_tb,"xlab-b",return_all=TRUE)
   p_guide <- get_plot_component_list(g_tb,"guide-box-bottom")

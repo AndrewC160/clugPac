@@ -16,10 +16,10 @@ binned_cna_average(gr_in, gr_cna_in, cna_col, query_col)
 \item{query_col}{Column name to be given to coverage values in the output GRanges object; defaults to the value of <cna_col>.}
 }
 \description{
-Given a genomic range object of interest and another genomic range object 
-representing genomic bins with a numeric column for copy number values, 
+Given a genomic range object of interest and another genomic range object
+representing genomic bins with a numeric column for copy number values,
 calculate the average copy number of the input ranges by averaging all bins
-overlapped with respect to total area covered. For instance, consider a 
+overlapped with respect to total area covered. For instance, consider a
 feature 10kb wide which overlaps 10 1kb bins. If the coverage value of 9 bins
 is 1 and the remaining bin is 10, the average coverage of the feature becomes
 1.9:
@@ -27,7 +27,7 @@ is 1 and the remaining bin is 10, the average coverage of the feature becomes
 90% of the feature's area is 1 and 10% is 10, so 0.9 x 1 + 0.1 x 10 = 1.9.
 
 The input range will be returned with an extra column containing the coverage
-values. The column of <gr_cna_in> with coverage values is specified using 
+values. The column of <gr_cna_in> with coverage values is specified using
 <cna_col>, and if an output column name is not provided via <query_col>, this
 will be the column name used for the output. Note that if an existing column
 is found of the same name, the function stops with an error.

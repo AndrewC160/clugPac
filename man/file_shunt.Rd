@@ -4,7 +4,14 @@
 \alias{file_shunt}
 \title{File shunt}
 \usage{
-file_shunt(fileA, fileB, create_dir = FALSE, over_write = FALSE)
+file_shunt(
+  fileA,
+  fileB,
+  create_dir = TRUE,
+  over_write = FALSE,
+  dry_run = FALSE,
+  output_bash_cmd = FALSE
+)
 }
 \arguments{
 \item{fileA}{Origin file.}
@@ -14,10 +21,16 @@ file_shunt(fileA, fileB, create_dir = FALSE, over_write = FALSE)
 \item{create_dir}{Boolean; should the output directory be created if it is missing? Defaults to FALSE.}
 
 \item{over_write}{Boolean; should an existing fileB be over-written? Defaults to FALSE.}
+
+\item{dry_run}{Boolean; should file not actually be copied? Defaults to FALSE, otherwise will print a message and return the filename.}
+
+\item{output_bash_cmd}{Boolean; should a BASH command be returned that would accomplish the file copy? Defaults to FALSE, otherwise the text output is a copy command that can be run in BASH.}
 }
 \description{
 Given file names A and B, if file B does not exist copy file A to create B.
 If file B does exist, ignore file A and return file B. Outputs file B after
 creating / confirming it exists. Useful for creating local copies of a given
-file.
+file. Can provide a conditional BASH command (i.e., returns empty text if
+fileB exists) as well, which is useful for producing basic scripts that can
+be executed outside of R.
 }

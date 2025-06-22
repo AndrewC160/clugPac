@@ -48,7 +48,8 @@ binned_cna_average <- function(gr_in,gr_cna_in,cna_col,query_col){
     as_tibble %>%
     cbind(cna=tot) %>%
     group_by(queryHits) %>%
-    summarize(cna = sum(cna),.groups='drop')
+    summarize(cna = sum(cna),.groups='drop') %>%
+    dplyr::rename(!!query_col := cna)
 
   gr_out<- gr_in %>%
     as_tibble %>%
@@ -57,7 +58,15 @@ binned_cna_average <- function(gr_in,gr_cna_in,cna_col,query_col){
     select(-queryHits) %>%
     makeGRangesFromDataFrame(keep.extra.columns = TRUE)
 
-  if(any(is.na(gr_out$cna))) warning("NAs detected in copy number column; were some regions not covered by CNA data?")
+  na_vals <- gr_out %>%
+    as_tibble %>%
+    select(!!as.name(query_col)) %>%
+    unlist %>%
+    unique %>%
+    is.na %>%
+    any
+
+  if(na_vals) warning("NAs detected in copy number column; were some regions not covered by CNA data?")
 
   return(gr_out)
 }

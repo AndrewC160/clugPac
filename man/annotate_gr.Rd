@@ -51,5 +51,7 @@ detected, all values are combined in a list, which can be collapsed into a
 string separated by semicolons (collapse_as_string; can be slow) or reduced
 to its first element (first_only). Function can also accept multiple query
 and subject columns, provided these are the same length.
-s
+
+If a null value is provided to gr_query, columns of NA values will be added
+to the original query and retruned.
 }
