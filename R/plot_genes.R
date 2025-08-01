@@ -30,6 +30,7 @@
 #' @param tad_linetype Linetype of TADs; defaults to "solid."
 #' @param tad_linewidth Linewidth of TADs; defaults to 0.5.
 #' @param tad_y_frac Fraction of the y-axis to scale TADs to; defaults to depend on x-range.
+#' @param return_tables Boolean; should tables of data and label positions be returned instead of a plot? Defaults to FALSE.
 #'
 #' @import ggplot2
 #' @import magrittr
@@ -41,11 +42,6 @@
 #'
 #' @export
 
-# gr_genes <- gtf_to_genes() %>% keepStandardChromosomes(pruning.mode="coarse")
-# genomic_region <- gr_genes[gr_genes$gene_name == "DLX5"] %>% resize(width=5E6,fix="center")
-# text_biotypes="all"
-# label_genes <- "DLX5"
-
 plot_genes<- function(genomic_region,gr_genes=NULL,label_genes=NULL,label_size=3,label_seed=NULL,
                       focus_genes=NULL,background_alpha=0.25,
                       text_genes=NULL,text_biotypes=c("protein_coding","lncRNA"),
@@ -53,7 +49,8 @@ plot_genes<- function(genomic_region,gr_genes=NULL,label_genes=NULL,label_size=3
                       x_trace_genes = "label",x_trace_alpha=0.3,
                       arrow_genes=TRUE,
                       gr_tads=NULL,tad_height=1.5,tad_alpha=0.1,tad_fill="gray50",tad_color=NA,tad_linetype="solid",tad_linewidth=0.5,tad_y_frac=NULL,
-                      gr_eigs){
+                      gr_eigs,
+                      return_tables=FALSE){
   rename  <- dplyr::rename
   mutate  <- dplyr::mutate
   filter  <- dplyr::filter
@@ -62,7 +59,7 @@ plot_genes<- function(genomic_region,gr_genes=NULL,label_genes=NULL,label_size=3
     message("Gathering genes from GFF file, provide a GR object to 'gr_genes' in order to speed this up in the future.")
     gr_genes <- gtf_to_genes() %>% keepStandardChromosomes(pruning.mode="coarse")
   }
-  gr <- gr_genes[queryHits(findOverlaps(gr_genes,genomic_region))]
+  gr <- gr_genes[queryHits(findOverlaps(gr_genes,genomic_region,ignore.strand=TRUE))]
   scale_x <- scale_x_continuous(name = grange_desc(genomic_region),
                                 oob = scales::oob_keep,
                                 limits=x_rng,expand=c(0,0),labels = comma)
@@ -125,197 +122,195 @@ plot_genes<- function(genomic_region,gr_genes=NULL,label_genes=NULL,label_size=3
       tb_labs <- mutate(tb_labs,text_y1 = 0,text_y2 = 0)
     }
 
-    # Scale y up for very large windows to represent "zoomed out" scale.
-    min_y_scale <- 6 + ceiling(width(genomic_region)/1E6)/2
-    y_rng <- c(0,max(c(min_y_scale,tb_labs$text_y2,tb_p$ymax)))
-    scale_y <- scale_y_continuous(name = "Genes",limits=c(-1,y_rng[2]+1),expand=c(0,0),oob = scales::oob_keep)
+    if(return_tables){
+      base_plot <- list(data=tb_p,labels=tb_labs)
+    }else{
+      # Scale y up for very large windows to represent "zoomed out" scale.
+      min_y_scale <- 6 + ceiling(width(genomic_region)/1E6)/2
+      y_rng <- c(0,max(c(min_y_scale,tb_labs$text_y2,tb_p$ymax)))
+      scale_y <- scale_y_continuous(name = "Genes",limits=c(-1,y_rng[2]+1),expand=c(0,0),oob = scales::oob_keep)
 
-    #Gene text.
-    tb_l <- filter(tb_labs,lab_type == "text")
-    gene_text <- NULL
-    if(nrow(tb_l) > 0){
-      gene_text <- list(
-        geom_segment(data=tb_l,
-                     mapping=aes(x=text_bin_start,
-                                 xend=text_bin_start,
-                                 y=text_y2,yend=text_y1,
-                                 alpha=focus_type),
-                     color="gray75"),
-        geom_segment(data=tb_l,
-                     mapping=aes(x=text_bin_start,
-                                 xend=start,
-                                 y=text_y1,yend=ymax,
-                                 alpha=focus_type),
-                     color="gray75"),
-        geom_segment(data=tb_l,
-                     mapping=aes(x=start,
-                                 xend=start,
-                                 y=ymax,yend=(ymin+ymax)/2,
-                                 alpha=focus_type),
-                     color="gray75"),
-        geom_text(data=tb_l,
-                  mapping=aes(x=text_bin_start,
-                              y=text_y2,
-                              label=gene_name,
-                              alpha=focus_type),
-                  hjust=0,vjust=0,
-                  size=text_size)
-      )
-    }
-
-    #TADs.
-    geoms_tads  <- NULL
-    if(!is.null(gr_tads)){
-      if(is.null(tad_y_frac)){
-        gr_wid <- width(genomic_region)
-        tad_y_frac<-
-          case_when(gr_wid < 1E5 ~ 1,
-                    gr_wid < 1E6 ~ 0.8,
-                    gr_wid < 1E7 ~ 0.5,
-                    gr_wid < 1E8 ~ 0.2,
-                    TRUE ~ 0.05)
+      #Gene text.
+      tb_l <- filter(tb_labs,lab_type == "text")
+      gene_text <- NULL
+      if(nrow(tb_l) > 0){
+        gene_text <- list(
+          geom_segment(data=tb_l,
+                       mapping=aes(x=text_bin_start,
+                                   xend=text_bin_start,
+                                   y=text_y2,yend=text_y1,
+                                   alpha=focus_type),
+                       color="gray75"),
+          geom_segment(data=tb_l,
+                       mapping=aes(x=text_bin_start,
+                                   xend=start,
+                                   y=text_y1,yend=ymax,
+                                   alpha=focus_type),
+                       color="gray75"),
+          geom_segment(data=tb_l,
+                       mapping=aes(x=start,
+                                   xend=start,
+                                   y=ymax,yend=(ymin+ymax)/2,
+                                   alpha=focus_type),
+                       color="gray75"),
+          geom_text(data=tb_l,
+                    mapping=aes(x=text_bin_start,
+                                y=text_y2,
+                                label=gene_name,
+                                alpha=focus_type),
+                    hjust=0,vjust=0,
+                    size=text_size)
+        )
       }
-      tb_tads <- gr_tads %>%
-        subsetByOverlaps(genomic_region) %>%
-        as_tibble %>%
-        select(seqnames,start,end,name) %>%
-        mutate(tad_idx=row_number()) %>%
-        mutate(x1=start,
-               x2=(start+end)/2,
-               x3=end,
-               x4=x2,
-               y1=0,
-               y2=(end - start)/2,
-               y3=0,
-               y4=-y2) %>%
-        pivot_longer(cols=c(x1,x2,x3,x4,y1,y2,y3,y4),
-                     names_to = c("dim","num"),
-                     names_pattern="(.)(.)",
-                     values_to = "coord") %>%
-        pivot_wider(id_cols = c(seqnames,start,end,name,tad_idx,num),
-                    names_from = dim,values_from = coord) %>%
-        rowwise %>%
-        mutate(off_start = x < x_rng[1],
-               off_end = x > x_rng[2],
-               y = case_when(off_start ~ list(c(-1,1) * (x_rng[1] - x)/2),
-                             off_end ~ list(c(-1,1) * (x - x_rng[2])/2),
-                             TRUE ~ list(y)),
-               x = case_when(off_start ~ list(rep(x_rng[1],length.out=2)),
-                             off_end ~ list(rep(x_rng[2],length.out=2)),
-                             TRUE ~ list(x))) %>%
-        ungroup %>%
-        group_by(tad_idx) %>%
-        mutate(off_start = cumsum(off_start),
-               off_end = cumsum(off_end)) %>%
-        mutate(keep = off_start <= max(off_start) & off_end <= 1) %>%
-        ungroup %>%
-        filter(keep) %>%
-        select(-off_start,-off_end,-keep) %>%
-        unnest(c(x,y)) %>%
-        group_by(name,tad_idx) %>%
-        mutate(num = row_number()) %>%
-        ungroup %>%
-        mutate(y = scale_to(y,-y_rng[2]*tad_y_frac,y_rng[2]*tad_y_frac),
-               y = y + tad_height)
 
-      # base_plot +
-      #   scale_y +
-      #   scale_x +
-      #   geom_polygon(data=tb_tads,mapping=aes(x=x,y=y,color=name,fill=name,group=tad_idx),alpha=0.1,color=NA) +
-      #   theme(legend.position='right')
-      if(nrow(tb_tads) > 0){
-        geoms_tads <-
-          geom_polygon(data=tb_tads,
-                       mapping=aes(x=x,y=y,color=name,fill=name,group=tad_idx),
-                       alpha=tad_alpha,color=tad_color,fill=tad_fill,linetype=tad_linetype,linewidth=tad_linewidth,
-                       show.legend=FALSE)
+      #TADs.
+      geoms_tads  <- NULL
+      if(!is.null(gr_tads)){
+        if(is.null(tad_y_frac)){
+          gr_wid <- width(genomic_region)
+          tad_y_frac<-
+            case_when(gr_wid < 1E5 ~ 1,
+                      gr_wid < 1E6 ~ 0.8,
+                      gr_wid < 1E7 ~ 0.5,
+                      gr_wid < 1E8 ~ 0.2,
+                      TRUE ~ 0.05)
+        }
+        tb_tads <- gr_tads %>%
+          subsetByOverlaps(genomic_region) %>%
+          as_tibble %>%
+          select(seqnames,start,end,name) %>%
+          mutate(tad_idx=row_number()) %>%
+          mutate(x1=start,
+                 x2=(start+end)/2,
+                 x3=end,
+                 x4=x2,
+                 y1=0,
+                 y2=(end - start)/2,
+                 y3=0,
+                 y4=-y2) %>%
+          pivot_longer(cols=c(x1,x2,x3,x4,y1,y2,y3,y4),
+                       names_to = c("dim","num"),
+                       names_pattern="(.)(.)",
+                       values_to = "coord") %>%
+          pivot_wider(id_cols = c(seqnames,start,end,name,tad_idx,num),
+                      names_from = dim,values_from = coord) %>%
+          rowwise %>%
+          mutate(off_start = x < x_rng[1],
+                 off_end = x > x_rng[2],
+                 y = case_when(off_start ~ list(c(-1,1) * (x_rng[1] - x)/2),
+                               off_end ~ list(c(-1,1) * (x - x_rng[2])/2),
+                               TRUE ~ list(y)),
+                 x = case_when(off_start ~ list(rep(x_rng[1],length.out=2)),
+                               off_end ~ list(rep(x_rng[2],length.out=2)),
+                               TRUE ~ list(x))) %>%
+          ungroup %>%
+          group_by(tad_idx) %>%
+          mutate(off_start = cumsum(off_start),
+                 off_end = cumsum(off_end)) %>%
+          mutate(keep = off_start <= max(off_start) & off_end <= 1) %>%
+          ungroup %>%
+          filter(keep) %>%
+          select(-off_start,-off_end,-keep) %>%
+          unnest(c(x,y)) %>%
+          group_by(name,tad_idx) %>%
+          mutate(num = row_number()) %>%
+          ungroup %>%
+          mutate(y = scale_to(y,-y_rng[2]*tad_y_frac,y_rng[2]*tad_y_frac),
+                 y = y + tad_height)
+        if(nrow(tb_tads) > 0){
+          geoms_tads <-
+            geom_polygon(data=tb_tads,
+                         mapping=aes(x=x,y=y,color=name,fill=name,group=tad_idx),
+                         alpha=tad_alpha,color=tad_color,fill=tad_fill,linetype=tad_linetype,linewidth=tad_linewidth,
+                         show.legend=FALSE)
+        }
       }
-    }
 
-    #X-axis traces.
-    poly_gns <- x_trace_genes
-    if("all" %in% tolower(x_trace_genes)){
-      poly_gns<- c(poly_gns,unique(tb_p$gene_id))
-    }
-    if("label" %in% tolower(x_trace_genes)){
-      poly_gns<- c(poly_gns,filter(tb_p,lab_type != "none")$gene_id)
-    }
-    if("focus" %in% tolower(x_trace_genes)){
-      poly_gns<- c(poly_gns,filter(tb_p,focus_type == "foreground")$gene_id)
-    }
-    geom_segs <- NULL
-    geom_polys<- NULL
-    tb_poly <- tb_p %>%
-      filter(gene_name %in% unique(poly_gns) | gene_id %in% unique(poly_gns)) %>%
-      mutate(gene_biotype = factor(as.character(gene_biotype),levels=levels(tb_p$gene_biotype)))
-
-    if(nrow(tb_poly) > 0){
-      tb_poly <- tb_poly %>%
-        mutate(x_frac = width/width(genomic_region),
-               x_polygon = x_frac > 0.01,
-               idx = row_number()) %>%
-        select(gene_name,gene_id,gene_biotype,start,end,mid,x_polygon,ymin,focus_type,lab_type,idx)
-
-      tb_segs <- filter(tb_poly,!x_polygon)
-      if(nrow(tb_segs) > 0){
-        geom_segs <- geom_segment(
-          data=tb_segs,
-          mapping=aes(x=mid,xend=mid,y=ymin+0.1,yend=-1),
-          color = "gray75",alpha=x_trace_alpha)
+      #X-axis traces.
+      poly_gns <- x_trace_genes
+      if("all" %in% tolower(x_trace_genes)){
+        poly_gns<- c(poly_gns,unique(tb_p$gene_id))
       }
-      tb_poly <- filter(tb_poly,x_polygon)
+      if("label" %in% tolower(x_trace_genes)){
+        poly_gns<- c(poly_gns,filter(tb_p,lab_type != "none")$gene_id)
+      }
+      if("focus" %in% tolower(x_trace_genes)){
+        poly_gns<- c(poly_gns,filter(tb_p,focus_type == "foreground")$gene_id)
+      }
+      geom_segs <- NULL
+      geom_polys<- NULL
+      tb_poly <- tb_p %>%
+        filter(gene_name %in% unique(poly_gns) | gene_id %in% unique(poly_gns)) %>%
+        mutate(gene_biotype = factor(as.character(gene_biotype),levels=levels(tb_p$gene_biotype)))
+
       if(nrow(tb_poly) > 0){
         tb_poly <- tb_poly %>%
-          rowwise %>%
-          mutate(x_pos = list(c(start,end,mid)),
-                 y_pos = list(c(ymin+0.1,ymin+0.1,-1))) %>%
-          ungroup %>%
-          unnest(c(x_pos,y_pos))
-        geom_polys <- geom_polygon(data=tb_poly,mapping=aes(x=x_pos,y=y_pos,fill=gene_biotype,group=idx),alpha=x_trace_alpha)
+          mutate(x_frac = width/width(genomic_region),
+                 x_polygon = x_frac > 0.01,
+                 idx = row_number()) %>%
+          select(gene_name,gene_id,gene_biotype,start,end,mid,x_polygon,ymin,focus_type,lab_type,idx)
+
+        tb_segs <- filter(tb_poly,!x_polygon)
+        if(nrow(tb_segs) > 0){
+          geom_segs <- geom_segment(
+            data=tb_segs,
+            mapping=aes(x=mid,xend=mid,y=ymin+0.1,yend=-1),
+            color = "gray75",alpha=x_trace_alpha)
+        }
+        tb_poly <- filter(tb_poly,x_polygon)
+        if(nrow(tb_poly) > 0){
+          tb_poly <- tb_poly %>%
+            rowwise %>%
+            mutate(x_pos = list(c(start,end,mid)),
+                   y_pos = list(c(ymin+0.1,ymin+0.1,-1))) %>%
+            ungroup %>%
+            unnest(c(x_pos,y_pos))
+          geom_polys <- geom_polygon(data=tb_poly,mapping=aes(x=x_pos,y=y_pos,fill=gene_biotype,group=idx),alpha=x_trace_alpha)
+        }
       }
-    }
 
-    base_plot  <- base_plot +
-      geoms_tads +
-      gene_text +
-      scale_alpha_manual(values=c(foreground=1,background=background_alpha)) +
-      scale_color_manual(values=c(foreground="black",background=NA)) +
-      scale_x +
-      scale_y +
-      geom_polys +
-      geom_segs +
-      geom_rect(data=tb_p,
-                mapping=aes(xmin = start,xmax=end,
-                            ymin = ymin+0.1, ymax=ymax-0.1,
-                            fill = gene_biotype,
-                            alpha=focus_type,
-                            color=focus_type),
-                linewidth=0.25)
+      base_plot  <- base_plot +
+        geoms_tads +
+        gene_text +
+        scale_alpha_manual(values=c(foreground=1,background=background_alpha)) +
+        scale_color_manual(values=c(foreground="black",background=NA)) +
+        scale_x +
+        scale_y +
+        geom_polys +
+        geom_segs +
+        geom_rect(data=tb_p,
+                  mapping=aes(xmin = start,xmax=end,
+                              ymin = ymin+0.1, ymax=ymax-0.1,
+                              fill = gene_biotype,
+                              alpha=focus_type,
+                              color=focus_type),
+                  linewidth=0.25)
 
-    if(arrow_genes){
-      base_plot <- base_plot +
-      geom_segment(data=filter(tb_p,strand != "*" & focus_type != "background" & lab_type != "none"),
-                   mapping=aes(x=start2,xend = end2,
-                               y=(ymin + ymax)/2,yend=(ymin + ymax) / 2,
-                               alpha=focus_type,
-                               color=focus_type),
-                   linewidth=1,
-                   arrow = arrow(length = unit(0.5,"lines"),type = "closed"))
-    }
+      if(arrow_genes){
+        base_plot <- base_plot +
+        geom_segment(data=filter(tb_p,strand != "*" & focus_type != "background" & lab_type != "none"),
+                     mapping=aes(x=start2,xend = end2,
+                                 y=(ymin + ymax)/2,yend=(ymin + ymax) / 2,
+                                 alpha=focus_type,
+                                 color=focus_type),
+                     linewidth=1,
+                     arrow = arrow(length = unit(0.5,"lines"),type = "closed"))
+      }
 
-    #Gene labels.
-    tb_l <- filter(tb_labs,lab_type == "label")
-    if(nrow(tb_l) > 0){
-      base_plot <- base_plot +
-        geom_label_repel(
-          data=tb_l,
-          seed = label_seed,
-          mapping=aes(x=(start + end) / 2,
-                      y=ymin+0.1,
-                      label = gene_name,
-                      alpha=focus_type),
-          min.segment.length = 0.01,
-          size=label_size,ylim = c(0,-0.5))
+      #Gene labels.
+      tb_l <- filter(tb_labs,lab_type == "label")
+      if(nrow(tb_l) > 0){
+        base_plot <- base_plot +
+          geom_label_repel(
+            data=tb_l,
+            seed = label_seed,
+            mapping=aes(x=(start + end) / 2,
+                        y=ymin+0.1,
+                        label = gene_name,
+                        alpha=focus_type),
+            min.segment.length = 0.01,
+            size=label_size,ylim = c(0,-0.5))
+      }
     }
   }
   return(base_plot)

@@ -7,6 +7,7 @@
 #' very much a work in progress.
 #'
 #' @param plot_in GGPlot object to split.
+#' @param fill_in_blanks Should NULL components be replaced with white rectangle grobs? Defaults to FALSE.
 #'
 #' @import grid
 #' @import cowplot
@@ -15,7 +16,7 @@
 #'
 #' @export
 
-plot_split  <- function(plot_in){
+plot_split  <- function(plot_in,fill_in_blanks=FALSE){
   g_tb <- ggplot_gtable(ggplot_build(plot_in)) %>% suppressWarnings
 
   #Top panel.
@@ -50,7 +51,7 @@ plot_split  <- function(plot_in){
   }else{
     mtx   <- NULL
   }
-  if(!is.null(p_guide)){
+  if(!is.null(p_guide) & length(p_guide) > 0){
     len_axs   <- nrow(mtx)
     grob_num  <- length(mtx)
     guide_pos <- ceiling(len_axs/2)
@@ -58,12 +59,16 @@ plot_split  <- function(plot_in){
     guide_rows[guide_pos] <- grob_num + 1
     mtx   <- cbind(mtx,guide_rows)
     p_right   <- c(p_right,p_guide)
-  }
-  if(!any(is.na(mtx))){
     panel_right <- grid.arrange(grobs=p_right,layout_matrix=mtx)
   }else{
     panel_right <- p_right
   }
+  # # Previously: if(!any(is.na(mtx))){
+  # if(any(is.na(mtx))){
+  #   panel_right <- grid.arrange(grobs=p_right,layout_matrix=mtx)
+  # }else{
+  #   panel_right <- p_right
+  # }
   if(length(panel_right) == 0) panel_right <- NULL
 
   #Bottom panel.
@@ -87,6 +92,14 @@ plot_split  <- function(plot_in){
     grid.arrange(grobs=.,layout_matrix = matrix(1:length(.),ncol = 1))
 
   if(length(panel_main) == 0) panel_main <- NULL
+
+  if(fill_in_blanks){
+    panel_main  <- panel_main %||% grid::grid.rect(gp = grid::gpar(col = NA))
+    panel_top   <- panel_top %||% grid::grid.rect(gp = grid::gpar(col = NA))
+    panel_right <- panel_right %||% grid::grid.rect(gp = grid::gpar(col = NA))
+    panel_bottom<- panel_bottom %||% grid::grid.rect(gp = grid::gpar(col = NA))
+    panel_left  <- panel_left %||% grid::grid.rect(gp = grid::gpar(col = NA))
+  }
 
   return(list(main=panel_main,
               top=panel_top,

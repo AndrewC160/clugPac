@@ -30,7 +30,8 @@ plot_genes(
   tad_linetype = "solid",
   tad_linewidth = 0.5,
   tad_y_frac = NULL,
-  gr_eigs
+  gr_eigs,
+  return_tables = FALSE
 )
 }
 \arguments{
@@ -83,6 +84,8 @@ plot_genes(
 \item{tad_linewidth}{Linewidth of TADs; defaults to 0.5.}
 
 \item{tad_y_frac}{Fraction of the y-axis to scale TADs to; defaults to depend on x-range.}
+
+\item{return_tables}{Boolean; should tables of data and label positions be returned instead of a plot? Defaults to FALSE.}
 }
 \description{
 Given a genomic range, plots a simple gene track using gene annotations from

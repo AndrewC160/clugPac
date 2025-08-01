@@ -4,10 +4,12 @@
 \alias{plot_split}
 \title{Plot split.}
 \usage{
-plot_split(plot_in)
+plot_split(plot_in, fill_in_blanks = FALSE)
 }
 \arguments{
 \item{plot_in}{GGPlot object to split.}
+
+\item{fill_in_blanks}{Should NULL components be replaced with white rectangle grobs? Defaults to FALSE.}
 }
 \description{
 Split plot into basic top/right/bottom/left/main panels. Useful when
