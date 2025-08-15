@@ -88,7 +88,8 @@ scan_bdg  <- function(bgz_files,name_vec,gr_regions,col_names,coarse_downsample_
       #Add newline in cases where only one value returned.
       tb_out <- paste0(tb_out,"\n")
     }
-    tb_out  <- fread(text=tb_out,sep="\t",col.names = col_names) %>%
+    tb_out  <- tb_out[!grepl("^\t",tb_out)] %>%
+      fread(text=.,sep="\t",col.names = col_names) %>%
       as_tibble %>%
       mutate(name = name_value)
 

@@ -16,7 +16,7 @@ file_shunt(
 \arguments{
 \item{fileA}{Origin file.}
 
-\item{fileB}{Destination file.}
+\item{fileB}{Destination file. If file is a directory (no "." in the basename), the original basename will be retained.}
 
 \item{create_dir}{Boolean; should the output directory be created if it is missing? Defaults to FALSE.}
 
@@ -32,5 +32,5 @@ If file B does exist, ignore file A and return file B. Outputs file B after
 creating / confirming it exists. Useful for creating local copies of a given
 file. Can provide a conditional BASH command (i.e., returns empty text if
 fileB exists) as well, which is useful for producing basic scripts that can
-be executed outside of R.
+be executed outside of R. If fileB is a directory (no "." in the )
 }

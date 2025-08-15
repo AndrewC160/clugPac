@@ -6,20 +6,27 @@
 #' creating / confirming it exists. Useful for creating local copies of a given
 #' file. Can provide a conditional BASH command (i.e., returns empty text if
 #' fileB exists) as well, which is useful for producing basic scripts that can
-#' be executed outside of R.
+#' be executed outside of R. If fileB is a directory (no "." in the )
 #'
 #' @param fileA Origin file.
-#' @param fileB Destination file.
+#' @param fileB Destination file. If file is a directory (no "." in the basename), the original basename will be retained.
 #' @param create_dir Boolean; should the output directory be created if it is missing? Defaults to FALSE.
 #' @param over_write Boolean; should an existing fileB be over-written? Defaults to FALSE.
 #' @param dry_run Boolean; should file not actually be copied? Defaults to FALSE, otherwise will print a message and return the filename.
 #' @param output_bash_cmd Boolean; should a BASH command be returned that would accomplish the file copy? Defaults to FALSE, otherwise the text output is a copy command that can be run in BASH.
 #'
+#' @import dplyr
+#' @import tidyr
+#' @import magrittr
+#' @import parallel
+#'
 #' @export
 
 file_shunt <- function(fileA,fileB,create_dir=TRUE,over_write=FALSE,dry_run=FALSE,output_bash_cmd=FALSE){
   if(!file.exists(fileA)) stop("File ",fileA,"not found.")
-  out_cmd   <- ""
+  out_cmd <- ""
+  b_name  <- basename(fileB)
+  if(!grepl("\\.",b_name)) fileB <- file.path(fileB,basename(fileA))
   if(!file.exists(fileB) | over_write){
     out_dir <- dirname(fileB)
     if(!dir.exists(out_dir)){
