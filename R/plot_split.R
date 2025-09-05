@@ -22,8 +22,12 @@ plot_split  <- function(plot_in,fill_in_blanks=FALSE){
   #Top panel.
   p_top     <- get_plot_component_list(g_tb,"-t",return_all=TRUE)
   len_ax <- length(p_top)
-  panel_top <- grid.arrange(grobs=p_top,layout_matrix=matrix(1:len_ax,ncol=1))
-  if(length(panel_top) == 0) panel_top <- NULL
+  if(len_ax == 0){
+    panel_top <- NULL
+  }else{
+    panel_top <- grid.arrange(grobs=p_top,layout_matrix=matrix(1:len_ax,ncol=1))
+  }
+  # if(length(panel_top) == 0) panel_top <- NULL
 
   #Left panel.
   p_left_ttl<- get_plot_component_list(g_tb,"ylab-l")
@@ -37,7 +41,11 @@ plot_split  <- function(plot_in,fill_in_blanks=FALSE){
     p_left  <- c(p_left,p_left_ttl)
     panel_left<-grid.arrange(grobs=p_left,layout_matrix=mtx)
   }
-  if(length(panel_left) == 0) panel_left <- NULL
+  if(length(p_left) == 0){
+    panel_left <- NULL
+  }else{
+    panel_left <- p_left
+  }
 
   #Right panel.
   p_axis  <- get_plot_component_list(g_tb,"axis-r",return_all=TRUE)
@@ -73,19 +81,30 @@ plot_split  <- function(plot_in,fill_in_blanks=FALSE){
 
   #Bottom panel.
   ## Need to fix bottom panel to allow for multiple axes (for instance when facet_wrap() is in the x-direction).
+  # lst_btm <- list(
+  #   p_axis=get_plot_component_list(g_tb,"axis-b",return_all=TRUE),
+  #   p_ttl= get_plot_component_list(g_tb,"xlab-b",return_all=TRUE),
+  #   p_guide=get_plot_component_list(g_tb,"guide-box-bottom"),
+  #   p_bottom=c(p_axis,p_ttl)
+  # )
+
   p_axis  <- get_plot_component_list(g_tb,"axis-b",return_all=TRUE)
   p_ttl   <- get_plot_component_list(g_tb,"xlab-b",return_all=TRUE)
   p_guide <- get_plot_component_list(g_tb,"guide-box-bottom")
   p_bottom<- c(p_axis,p_ttl)
-  if(length(p_guide) > 0){
+
+  if(!is.null(p_bottom) & !is.null(p_guide)){
     mtx   <- matrix(1:3,ncol=1)
     p_bottom<- c(p_bottom,p_guide)
-  }else{
+    panel_bottom <- grid.arrange(grobs=p_bottom,layout_matrix=mtx)
+  }else if(!is.null(p_bottom)){
     mtx   <- matrix(1:2,ncol=1)
+    panel_bottom <- grid.arrange(grobs=p_bottom,layout_matrix=mtx)
+  }else if(!is.null(p_guide)){
+    panel_bottom <- p_guide
+  }else{
+    panel_bottom <- NULL
   }
-  panel_bottom<- grid.arrange(grobs=p_bottom,layout_matrix=mtx)
-
-  if(length(panel_bottom) == 0) panel_bottom <- NULL
 
   #Main panel.
   panel_main  <- get_panel(g_tb,return_all=TRUE) %>%

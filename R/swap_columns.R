@@ -51,34 +51,39 @@
 #' @export
 
 swap_columns  <- function(tb_in,colA,colB,condition=NULL,ignore_missing=TRUE){
-  if(!colA %in% colnames(tb_in) | !colB %in% colnames(tb_in)){
-    if(ignore_missing){
-      tb_out <- tb_in
-    }else{
-      stop("One or both of columns",colA,"/",colB,"not found in the data table.")
-    }
+  if(nrow(tb_in) == 0){
+    # If table is empty, skip everything.
+    tb_out <- tb_in
   }else{
-
-    valsA1 <- valsA2 <- tb_in[,colA] %>% unlist
-    valsB1 <- valsB2 <- tb_in[,colB] %>% unlist
-    valsC <- NULL
-
-    if(is.null(condition)){
-      valsC <- rep(TRUE,length(valsA1))
-    }else if(is.character(condition)){
-      valsC <- tb_in[,condition] %>% unlist
-    }else if(is.function(condition)){
-      valsC <- mapply(condition,valsA1,valsB1)
+    if(!colA %in% colnames(tb_in) | !colB %in% colnames(tb_in)){
+      if(ignore_missing){
+        tb_out <- tb_in
+      }else{
+        stop("One or both of columns",colA,"/",colB,"not found in the data table.")
+      }
     }else{
-      stop("Condition argument must be a column name, a function to mapply across colA and colB, or NULL.")
+
+      valsA1 <- valsA2 <- tb_in[,colA] %>% unlist
+      valsB1 <- valsB2 <- tb_in[,colB] %>% unlist
+      valsC <- NULL
+
+      if(is.null(condition)){
+        valsC <- rep(TRUE,length(valsA1))
+      }else if(is.character(condition)){
+        valsC <- tb_in[,condition] %>% unlist
+      }else if(is.function(condition)){
+        valsC <- mapply(condition,valsA1,valsB1)
+      }else{
+        stop("Condition argument must be a column name, a function to mapply across colA and colB, or NULL.")
+      }
+
+      valsA2[valsC] <- valsB1[valsC]
+      valsB2[valsC] <- valsA1[valsC]
+
+      tb_out <- tb_in %>%
+        mutate(!!as.name(colA) := valsA2,
+               !!as.name(colB) := valsB2)
     }
-
-    valsA2[valsC] <- valsB1[valsC]
-    valsB2[valsC] <- valsA1[valsC]
-
-    tb_out <- tb_in %>%
-      mutate(!!as.name(colA) := valsA2,
-             !!as.name(colB) := valsB2)
   }
   return(tb_out)
 }
